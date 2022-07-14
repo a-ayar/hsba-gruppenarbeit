@@ -1,41 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>WG-Kassenbuch</title>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <body>
-<div class="container">
-    <div class="mt-4 mb-4">
-        <h1>Fächer</h1>
+<div layout:fragment="content">
+    <div class="my-4">
+        <h1> Fächer</h1>
+
+        <p class="small">
+            <a href="/menu/"> zurück zum Menü</a>
+        </p>
     </div>
 
+<!-- Tabelle für Fach anzeigen-->
     <table th:if="${subject != null and !subject.entries.empty}" class="table">
         <tr>
-            <th> Id</th>
+            <th>Id</th>
             <th>Fach</th>
             <th>Lehrer</th>
+            <th>Schüler</th>
         </tr>
-        <!--Einsicht in die Fächer-->
         <tr th:each="entry : ${subject.entries}">
             <td th:text="${#numbers.formatDecimal(entry.subjectId, 1, 2)}"></td>
             <td th:text="${entry.subjectName}"></td>
             <td th:text="${entry.subjectTeacher}"></td>
+            <td th:text="${entry.subjectStudent}"></td>
         </tr>
     </table>
 
-    <!--Fächer anlegen-->
+    <!-- Antrag für Fach anlegen-->
     <div>
-        <hr/>
+        <hr />
         <h2>Fach anlegen</h2>
-        <form action="/add" method="post" class="form-inline">
-            <input name="subjectId" type="number" min="0" step="1" placeholder="Id" class="form-control mr-2">
+        <form th:action="${'/menu/' + subject.id}" method="post" class="form-inline">
             <input name="subjectName" type="text" placeholder="Fach Bezeichnung" class="form-control mr-2">
             <input name="subjectTeacher" type="text" placeholder="Lehrer" class="form-control mr-2">
+            <input name="subjectStudent" type="text" placeholder="Schüler" class="form-control mr-2">
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>
     </div>
+
+    <hr/>
 </div>
 </body>
 </html>

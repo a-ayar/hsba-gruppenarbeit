@@ -1,6 +1,9 @@
 package de.hsba.bi.demo.subject;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.*;
 
 //@Entity
@@ -10,16 +13,21 @@ public class Subject {
     // @Entity
     //@Id
     // @GeneratedValue
-    // private int id;
+    @Getter
+    @Setter
+    private Long id;
 
-    // @Getter
-    // @Setter
+    @Setter
+    @Getter
+    private String name;
+
     // @Basic (optional = false)
     // private String name;
 
     //   @Getter
     //   @Setter
-    public List<SubjectEntry> entries;
+    //public List<SubjectEntry> entries;
+    private List<SubjectEntry> entries;
 
     public List<SubjectEntry> getEntries() {
         if (entries == null) {

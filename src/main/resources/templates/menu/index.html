@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="my-4">
+        <h1>Menü</h1>
+    </div>
+
+    <ul class="list-unstyled">
+        <li th:each="subject : ${subjects}">
+            <a th:href="${'/menu/' + subject.id}" th:text="${subject.name}"></a>
+        </li>
+    </ul>
+<!--
+    <form action="/subjects" method="post" class="form-inline">
+        <input name="subjectId" type="number" min="0" step="1" placeholder="Id" class="form-control mr-2">
+        <input name="subjectName" type="text" placeholder="Fach Bezeichnung" class="form-control mr-2">
+        <input name="subjectTeacher" type="text" placeholder="Lehrer" class="form-control mr-2">
+        <button type="submit" class="btn btn-primary">Erstellen</button>
+
+    </form>
+-->
+
+</div>
+</body>
+</html>
+

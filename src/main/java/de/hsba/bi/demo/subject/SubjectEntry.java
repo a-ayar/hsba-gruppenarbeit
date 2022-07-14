@@ -1,14 +1,37 @@
 package de.hsba.bi.demo.subject;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+//@AllArgsConstructor
+
 public class SubjectEntry {
 
     //Variablen
 
     private int subjectId;
 
+    private Subject subject;//new 3
+
     private String subjectName;
 
     private String subjectTeacher;
+
+    private String subjectStudent;
+//ex3
+    public SubjectEntry(final int subjectId, final String subjectName, final String subjectTeacher, final String subjectStudent) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+        this.subjectTeacher = subjectTeacher;
+        this.subjectStudent = subjectStudent;
+    }
+
+    /*
 
     public SubjectEntry() {
     }
@@ -44,4 +67,5 @@ public class SubjectEntry {
     public void setSubjectTeacher(String subjectTeacher) {
         this.subjectTeacher = subjectTeacher;
     }
+    */
 }
