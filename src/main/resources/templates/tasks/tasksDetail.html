@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="my-4">
+        <h1> Lösungen </h1>
+
+        <p class="small">
+            <a href="/tasks/"> zurück zum Menü</a>
+        </p>
+    </div>
+
+    <h4 th:if="${task != null and !task.entries.empty}"> Lösungen </h4>
+    <!-- Tabelle für Fach anzeigen-->
+    <table th:if="${task != null and !task.entries.empty}" class="table">
+        <tr>
+            <th>Id</th>
+            <th>Lösung</th>
+            <th>Schüler</th>
+
+        </tr>
+        <tr th:each="entry : ${task.entries}">
+            <td th:text="${#numbers.formatDecimal(entry.id, 1, 2)}"></td>
+            <td th:text="${entry.solution}"></td>
+            <td th:text="${entry.student}"></td>
+        </tr>
+    </table>
+    <!-- Antrag für Fach anlegen -->
+    <div>
+        <hr/>
+        <h4>Lösung eintragen</h4>
+        <form th:action="${'/tasks/' + task.id}" method="post" class="form-inline">
+            <input name="solution" type="text" placeholder="Antwort" class="form-control mr-2">
+            <select class="form-control mr-2" name="student">
+                <option disabled="disabled" selected="selected">Schüler</option>
+                <option th:each="user : ${users}" th:text="${user.name}" th:value="${user.id}"></option>
+            </select>
+            <button type="submit" class="btn btn-primary">Eintragen</button>
+        </form>
+    </div>
+    <hr/>
+</div>
+</body>
+</html>

@@ -1,42 +1,44 @@
 package de.hsba.bi.demo.subject;
 
+import de.hsba.bi.demo.user.User;
 import org.springframework.stereotype.Service;
-import java.util.Collection;
+
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
 
-@Service // da von dieser Klasse ein Objekt erstellt werden soll
+
+@Service
 @Transactional
-
-//Service mit den Methoden
 public class SubjectService {
 
+    private final SubjectRepository subjectRepository;
 
-    private final SubjectRepository repository;
-
-    public SubjectService(SubjectRepository repository) {
-        this.repository = repository;
+    public SubjectService(SubjectRepository subjectRepository) {
+        this.subjectRepository = subjectRepository;
     }
-
-    public Subject createSubject(String name) {
+    // Fach erstellen
+    public Subject createSubject(String name, String teacher, String students) {
         Subject subject = new Subject();
         subject.setName(name);
-        return repository.save(subject);
+        subject.setTeacher(teacher);
+        subject.setStudents(students);
+        return subjectRepository.save(subject);
+    }
+    //Aufgabe speicher speichern
+    public Subject save(Subject subject) {
+        return subjectRepository.save(subject);
     }
 
-    public Subject save(Subject subject) {
-        return repository.save(subject);
-    }
+    //Aufgabe aufrufen
 
     public Subject getSubject(Long id) {
-        return repository.findById(id).orElse(null);
+        return subjectRepository.findById(id).orElse(null);
     }
 
-    public void addSubjectEntry(Subject subject, SubjectEntry entry) {
-        entry.setSubject(subject);
-        subject.getEntries().add(entry);
-}
-
-    public Collection<Subject> getAll() {
-        return repository.findAll();
+    public List<Subject> findAll() {return subjectRepository.findAll();
     }
 }
+
+
+

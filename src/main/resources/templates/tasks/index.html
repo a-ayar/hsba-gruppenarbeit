@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="my-4">
+
+        <h1>Menü</h1>
+        <p class="small">
+            <a href="/subjects/"> Fächer anlegen</a><br>
+            <a href="/users/"> Nutzer anlegen</a>
+        </p>
+    </div>
+
+    <h3>vorhandene Aufgaben</h3>
+
+
+    <div>
+        <table class="table">
+
+            <tr>
+                <th>Id</th>
+                <th>Titel</th>
+                <th>Beschreibung</th>
+                <th>Fach</th>
+                <th>Status</th>
+
+            </tr>
+
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.title}"></td>
+              <!-- <td> <a th:href="${'/tasks/' + task.id}"
+                       th:text="${task.title}"></a> </td> -->
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.subject}"></td>
+                <td th:text="${task.status}"></td>
+                <td> <a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>
+            </tr>
+        </table>
+    </div>
+    <h3>Aufgabe anlegen</h3>
+        <form action="/tasks/" method="post" class="form-inline">
+            <input name="title" type="text" placeholder="Titel" class="form-control mr-2">
+            <input name="description" type="text" placeholder="Beschreibung" class="form-control mr-2">
+            <input name="subject" type="text" placeholder="Fach" class="form-control mr-2">
+            <input name="status" type="text" placeholder="Status" class="form-control mr-2">
+            <button type="submit" class="btn btn-primary">Erstellen</button>
+        </form>
+
+</div>
+</body>
+</html>

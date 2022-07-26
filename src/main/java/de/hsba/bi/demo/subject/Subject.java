@@ -1,39 +1,50 @@
 package de.hsba.bi.demo.subject;
 
-
+//import de.hsba.bi.demo.user.User;
+import de.hsba.bi.demo.user.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
+import javax.persistence.*;
 
-//@Entity
-//@NoArgsConstructor
-public class Subject {
-//Variablen
-    // @Entity
-    //@Id
-    // @GeneratedValue
+@Entity
+@NoArgsConstructor
+public class Subject implements Comparable<Subject> {
+
+    @Id
+    @GeneratedValue
     @Getter
-    @Setter
     private Long id;
 
     @Setter
     @Getter
+    @Basic (optional = false)
     private String name;
 
-    // @Basic (optional = false)
-    // private String name;
+    @Setter
+    @Getter
+    //@ManyToOne (optional = false)
+    private String teacher;
 
-    //   @Getter
-    //   @Setter
-    //public List<SubjectEntry> entries;
-    private List<SubjectEntry> entries;
+    @Setter
+    @Getter
+    @Basic (optional = false)
+    private String students;
 
-    public List<SubjectEntry> getEntries() {
-        if (entries == null) {
-            entries = new ArrayList<>();
-        }
-        return entries;
+    public Subject(String name, String teacher, String students) {
+        this.name = name;
+        this.teacher = teacher;
+        this.students = students;
     }
 
+    @Override
+    public int compareTo(Subject other) {
+        return this.name.compareTo(other.name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
