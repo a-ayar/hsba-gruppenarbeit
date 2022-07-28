@@ -25,10 +25,10 @@ public class TestDataCreator {
     @EventListener(ApplicationStartedEvent.class)
     public void init() {
         //user
-        User aylin = userService.save(new User( "Aylin Ayar", "Aylin", "1234"));
-        User nils = userService.save(new User( "Nils Voß", "Nils", "1234"));
-        User marc = userService.save(new User( "Marc Schümann", "Marc", "1234"));
-        User andreas = userService.save(new User( "Andreas Hoppe", "Andreas", "1234"));
+        User aylin = userService.save(new User( "Aylin Ayar", "Aylin", "1234", User.STUDENT_ROLE));
+        User nils = userService.save(new User( "Nils Voß", "Nils", "1234", User.STUDENT_ROLE));
+        User marc = userService.save(new User( "Marc Schümann", "Marc", "1234", User.STUDENT_ROLE));
+        User andreas = userService.save(new User( "Andreas Hoppe", "Andreas", "1234", User.TEACHER_ROLE));
 
         // add example Journal for testing
         Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", "Mathe", "initial");

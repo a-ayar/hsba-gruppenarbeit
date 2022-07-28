@@ -11,9 +11,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User implements Comparable<User> {
 
-    //public static String USER_ROLE = "Student";
-    //public static String TEACHER_ROLE = "Lehrer";
-    //public static String ADMIN_ROLE = "ADMIN";
+    public static String STUDENT_ROLE = "Student";
+    public static String TEACHER_ROLE = "Lehrer";
+    public static String ADMIN_ROLE = "ADMIN";
 
     @Getter
     @Id
@@ -35,11 +35,17 @@ public class User implements Comparable<User> {
     @Basic(optional = false)
     private String password;
 
+    @Getter
+    @Setter
+    @Basic(optional = false)
+    private String role;
 
-    public User(String name, String username, String password) {
+
+    public User(String name, String username, String password, String role) {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     @Override
@@ -51,4 +57,6 @@ public class User implements Comparable<User> {
     public String toString() {
         return name;
     }
+
+
 }

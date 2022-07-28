@@ -24,8 +24,8 @@ public class CreateUserController {
     }
 
     @PostMapping
-    public String create(String name, String teacher,String students) {
-        User user = userService.createUser(name, teacher, students);
+    public String create(String name, String username,String password, String role) {
+        User user = userService.createUser(name, username, password, role);
         return "redirect:/users/";
     }
 }
