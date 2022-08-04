@@ -11,14 +11,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User implements Comparable<User> {
 
-    public static String STUDENT_ROLE = "Student";
+    @Basic(optional = false)
+    public static String STUDENT_ROLE = "Schüler";
     public static String TEACHER_ROLE = "Lehrer";
-    public static String ADMIN_ROLE = "ADMIN";
+    public static String ADMIN_ROLE = "Admin";
 
     @Getter
     @Id
     @GeneratedValue
     private Long id;
+
 
     @Getter
     @Setter

@@ -37,8 +37,16 @@
         <h3> Fach anlegen</h3>
         <form action="/subjects/" method="post" class="form-inline">
             <input name="name" type="text" placeholder="Fach" class="form-control mr-2">
-            <input name="teacher" type="text" placeholder="Lehrer" class="form-control mr-2">
-            <input name="students" type="text" placeholder="Schüler" class="form-control mr-2">
+
+            <select class="form-control mr-2" name="teacher">
+                <option disabled="disabled" selected="selected">Lehrer</option>
+                <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
+            </select>
+
+            <select class="form-control mr-2" name="students">
+                <option disabled="disabled" selected="selected">Schüler</option>
+                <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
+            </select>
             <button type="submit" class="btn btn-primary">Erstellen</button>
         </form>
 

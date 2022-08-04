@@ -44,8 +44,19 @@
         <form action="/tasks/" method="post" class="form-inline">
             <input name="title" type="text" placeholder="Titel" class="form-control mr-2">
             <input name="description" type="text" placeholder="Beschreibung" class="form-control mr-2">
-            <input name="subject" type="text" placeholder="Fach" class="form-control mr-2">
-            <input name="status" type="text" placeholder="Status" class="form-control mr-2">
+
+            <select class="form-control mr-2" name="subject">
+                <option disabled="disabled" selected="selected">Fach</option>
+                <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+            </select>
+
+            <select class="form-control mr-2" name="status">
+                <option disabled="disabled" selected="selected">Rolle</option>
+                <option value="initial"> Initial </option>
+                <option value="veröffentlicht">Veröffentlicht </option>
+                <option value="geschlossen"> Geschlossen </option>
+            </select>
+
             <button type="submit" class="btn btn-primary">Erstellen</button>
         </form>
 

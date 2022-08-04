@@ -17,15 +17,16 @@ public class SubjectService {
     public SubjectService(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
+
     // Fach erstellen
-    public Subject createSubject(String name, String teacher, String students) {
-        Subject subject = new Subject();
-        subject.setName(name);
-        subject.setTeacher(teacher);
-        subject.setStudents(students);
+    public Subject createSubject(String name, User teacher, String students) {
+        Subject subject = new Subject(name, teacher, students);
+//        subject.setName(name);
+//        subject.setTeacher(teacher);
+//        subject.setStudents(students);
         return subjectRepository.save(subject);
     }
-    //Aufgabe speicher speichern
+    //Aufgabe speicher --> für testdata
     public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
@@ -38,6 +39,7 @@ public class SubjectService {
 
     public List<Subject> findAll() {return subjectRepository.findAll();
     }
+
 }
 
 

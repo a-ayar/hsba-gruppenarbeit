@@ -1,5 +1,6 @@
 package de.hsba.bi.demo.task;
 
+import de.hsba.bi.demo.subject.Subject;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
 import javax.transaction.Transactional;
@@ -17,7 +18,7 @@ public class TaskService {
     }
 
 // Aufgabe erstellen
-    public Task createTask(String title, String description, String subject, String status) {
+    public Task createTask(String title, String description, Subject subject, String status) {
         Task task = new Task();
         task.setTitle(title);
         task.setDescription(description);

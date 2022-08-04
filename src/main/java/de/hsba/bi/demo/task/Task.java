@@ -1,6 +1,7 @@
 package de.hsba.bi.demo.task;
 
 
+import de.hsba.bi.demo.subject.Subject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,8 +28,8 @@ public class Task {
 
     @Setter
     @Getter
-    @Basic(optional = false)
-    private String subject;
+    @ManyToOne (optional = false)
+    private Subject subject;
 
     @Setter
     @Getter
@@ -36,7 +37,7 @@ public class Task {
     private String status;
 
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "task")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     private List<TaskEntry> entries;
 
 

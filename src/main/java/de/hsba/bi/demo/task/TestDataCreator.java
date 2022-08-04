@@ -25,18 +25,22 @@ public class TestDataCreator {
     @EventListener(ApplicationStartedEvent.class)
     public void init() {
         //user
-        User aylin = userService.save(new User( "Aylin Ayar", "Aylin", "1234", User.STUDENT_ROLE));
-        User nils = userService.save(new User( "Nils Voß", "Nils", "1234", User.STUDENT_ROLE));
-        User marc = userService.save(new User( "Marc Schümann", "Marc", "1234", User.STUDENT_ROLE));
+        User aylin = userService.save(new User(  "Aylin Ayar", "Aylin", "1234", User.ADMIN_ROLE));
+        User nils = userService.save(new User( " Nils Voß", "Nils", "1234", User.STUDENT_ROLE));
+        User marc = userService.save(new User( " Marc Schümann", "Marc", "1234", User.STUDENT_ROLE));
         User andreas = userService.save(new User( "Andreas Hoppe", "Andreas", "1234", User.TEACHER_ROLE));
+        User uwe = userService.save(new User( "uwe Hoppe", "uwe", "1234", User.TEACHER_ROLE));
+
+        // add some subjects
+        Subject subject = subjectService.createSubject("Deutsch", aylin, "Günther");
+        Subject mathe = subjectService.save(new Subject("Mathe", nils, "Günther" ));
+        subjectService.save(subject);
+        subjectService.save(new Subject("Deutsch", andreas, "Günther" ));
 
         // add example Journal for testing
-        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", "Mathe", "initial");
+        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", mathe, "initial"); //String
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33",  aylin));
         taskService.save(task);
 
-        // add some subjects
-        Subject subject = subjectService.createSubject("Mathe", "Aylin", "Günther");
-        subjectService.save(subject);
     }
 }

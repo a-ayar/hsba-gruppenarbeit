@@ -15,20 +15,22 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void init() {
-        userRepository.save(new User( "Aylin Ayar", "Aylin", "1234", User.STUDENT_ROLE));
-        userRepository.save(new User( "Nils Voß", "Nils", "1234", User.STUDENT_ROLE));
-        userRepository.save(new User( "Marc Schümann", "Marc", "1234", User.STUDENT_ROLE));
-        userRepository.save(new User( "Andreas Hoppe", "Andreas", "1234", User.TEACHER_ROLE));
-    }
-    public List<User> findAll() {return userRepository.findAll();
-    }
+    public List<User> findAll() {return userRepository.findAll();}
 
-    //public List<User> findAllTeacher() {return userRepository.stream}
-    //public List<User> findAllStudents() {return userRepository.}
+    public List<User> findAllAdmins() {return userRepository.findByRole("Admin");}
+    public List<User> findAllTeacher() {
+        List<User> teachers = userRepository.findByRole("Lehrer");
+        teachers.forEach(teacher -> System.out.println("Teacher Id: " + teacher.getId()));
+        return teachers;
+
+    }
+    public List<User> findAllStudents() {return userRepository.findByRole("Schüler");}
 
     public User save(User user) {return userRepository.save(user);
     }
+    //public List<User> findUsers() {return userRepository.findByRole(User.USER_ROLE);}
+//    public User findCurrentUser() {return userRepository.findByName(User.getCurrentUsername());}
+
 
     // Fach erstellen
     public User createUser(String name, String username, String password, String role) {
@@ -39,4 +41,6 @@ public class UserService {
         user.setRole(role);
         return userRepository.save(user);
     }
+
+
 }

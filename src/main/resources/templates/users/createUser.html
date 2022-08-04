@@ -38,10 +38,16 @@
         </div>
         <h3>Neuen User erstellen</h3>
         <form action="/users/" method="post" class="form-inline">
-            <input name="name" type="text" placeholder="Vor/- Nachname" class="form-control mr-2">
+            <input name="name" type="text" placeholder="Name" class="form-control mr-2">
             <input name="username" type="text" placeholder="Username" class="form-control mr-2">
             <input name="password" type="text" placeholder="Passwort" class="form-control mr-2">
-            <input name="role" type="text" placeholder="Rolle" class="form-control mr-2">
+            <select class="form-control mr-2" name="role">
+                <option disabled="disabled" selected="selected">Rolle</option>
+                <option value="Lehrer">Lehrer </option>
+                <option value="Schüler">Schüler </option>
+                <option value="Admin"> Admin </option>
+            </select>
+
             <button type="submit" class="btn btn-primary">Erstellen</button>
         </form>
 

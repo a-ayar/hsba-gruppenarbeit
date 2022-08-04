@@ -24,15 +24,15 @@ public class Subject implements Comparable<Subject> {
 
     @Setter
     @Getter
-    //@ManyToOne (optional = false)
-    private String teacher;
+    @ManyToOne (optional = false)
+    private User teacher;
 
     @Setter
     @Getter
     @Basic (optional = false)
     private String students;
 
-    public Subject(String name, String teacher, String students) {
+    public Subject(String name, User teacher, String students) {
         this.name = name;
         this.teacher = teacher;
         this.students = students;
