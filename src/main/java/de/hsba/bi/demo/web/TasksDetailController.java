@@ -9,10 +9,7 @@ import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/tasks")
@@ -32,7 +29,8 @@ public class TasksDetailController {
     }
 
     @PostMapping
-    public String create(String title, String description, Subject subject, String status) {
+    public String create(@RequestParam(name = "title")String title, @RequestParam(name = "description") String description, @RequestParam(name = "subject") Long subjectid, @RequestParam(name = "status") String status) {
+        Subject subject = subjectService.getSubject(subjectid);
         Task task = taskService.createTask(title, description, subject, status);
         return "redirect:/tasks/";
     }

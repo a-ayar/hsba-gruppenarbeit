@@ -10,6 +10,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -32,10 +35,10 @@ public class TestDataCreator {
         User uwe = userService.save(new User( "uwe Hoppe", "uwe", "1234", User.TEACHER_ROLE));
 
         // add some subjects
-        Subject subject = subjectService.createSubject("Deutsch", aylin, "Günther");
-        Subject mathe = subjectService.save(new Subject("Mathe", nils, "Günther" ));
+        Subject subject = subjectService.createSubject("Deutsch", aylin, marc);
+        Subject mathe = subjectService.save(new Subject("Mathe", nils, marc));
         subjectService.save(subject);
-        subjectService.save(new Subject("Deutsch", andreas, "Günther" ));
+        subjectService.save(new Subject("Deutsch", andreas, nils));
 
         // add example Journal for testing
         Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", mathe, "initial"); //String

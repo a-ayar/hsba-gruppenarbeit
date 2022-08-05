@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -19,11 +20,8 @@ public class SubjectService {
     }
 
     // Fach erstellen
-    public Subject createSubject(String name, User teacher, String students) {
+    public Subject createSubject(String name, User teacher, User students) {
         Subject subject = new Subject(name, teacher, students);
-//        subject.setName(name);
-//        subject.setTeacher(teacher);
-//        subject.setStudents(students);
         return subjectRepository.save(subject);
     }
     //Aufgabe speicher --> für testdata

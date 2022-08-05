@@ -1,6 +1,7 @@
 package de.hsba.bi.demo.user;
 
 import de.hsba.bi.demo.subject.Subject;
+import de.hsba.bi.demo.task.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +19,15 @@ public class UserService {
     public List<User> findAll() {return userRepository.findAll();}
 
     public List<User> findAllAdmins() {return userRepository.findByRole("Admin");}
-    public List<User> findAllTeacher() {
-        List<User> teachers = userRepository.findByRole("Lehrer");
-        teachers.forEach(teacher -> System.out.println("Teacher Id: " + teacher.getId()));
-        return teachers;
-
-    }
+    public List<User> findAllTeacher() {return userRepository.findByRole("Lehrer");}
     public List<User> findAllStudents() {return userRepository.findByRole("Schüler");}
 
     public User save(User user) {return userRepository.save(user);
     }
-    //public List<User> findUsers() {return userRepository.findByRole(User.USER_ROLE);}
-//    public User findCurrentUser() {return userRepository.findByName(User.getCurrentUsername());}
+
+    public User getUser(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
 
     // Fach erstellen

@@ -11,6 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/subjects")
@@ -31,7 +35,9 @@ public class CreateSubjectController {
 
     //zum Fachanlegen
     @PostMapping
-    public String create(String name, User teacher,String students) {
+    public String create(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") Long studentsid) {
+        User teacher = userService.getUser(teacherid);
+        User students = userService.getUser(studentsid);
         Subject subject = subjectService.createSubject(name, teacher, students);
         return "redirect:/subjects/";
     }

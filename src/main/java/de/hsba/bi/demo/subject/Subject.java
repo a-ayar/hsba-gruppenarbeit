@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -29,10 +33,10 @@ public class Subject implements Comparable<Subject> {
 
     @Setter
     @Getter
-    @Basic (optional = false)
-    private String students;
+    @ManyToOne
+    private User students;
 
-    public Subject(String name, User teacher, String students) {
+    public Subject(String name, User teacher, User students) {
         this.name = name;
         this.teacher = teacher;
         this.students = students;
