@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -33,13 +31,12 @@ public class Subject implements Comparable<Subject> {
 
     @Setter
     @Getter
-    @ManyToOne
-    private User students;
+    @OneToMany
+    private List<SubjectAssignment> assignments =new ArrayList<>();
 
-    public Subject(String name, User teacher, User students) {
+    public Subject(String name, User teacher) {
         this.name = name;
         this.teacher = teacher;
-        this.students = students;
     }
 
     @Override

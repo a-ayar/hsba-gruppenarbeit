@@ -32,13 +32,11 @@ public class TaskService {
     }
 
     //Aufgabe aufrufen
-
     public Task getTask(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     //Lösung eingeben
-
     public void addTaskEntry(Task task, TaskEntry entry) {
         entry.setTask(task);
         task.getEntries().add(entry);

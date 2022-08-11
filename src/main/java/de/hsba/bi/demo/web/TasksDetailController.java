@@ -24,7 +24,7 @@ public class TasksDetailController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("tasks", taskService.getAll());
-        model.addAttribute("subjects", subjectService.findAll()); //
+        model.addAttribute("subjects", subjectService.findAll());
         return "tasks/index";
     }
 

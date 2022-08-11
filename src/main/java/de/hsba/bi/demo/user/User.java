@@ -1,11 +1,13 @@
 package de.hsba.bi.demo.user;
 
 import de.hsba.bi.demo.subject.Subject;
+import de.hsba.bi.demo.subject.SubjectAssignment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "Users")
@@ -32,6 +34,7 @@ public class User implements Comparable<User> {
     @Getter
     @Setter
     @Basic(optional = false)
+    @Column(unique = true)//
     private String username;
 
     @Getter
@@ -43,6 +46,12 @@ public class User implements Comparable<User> {
     @Setter
     @Basic(optional = false)
     private String role;
+
+    @Getter
+    @Setter
+    @OneToMany
+    private List<SubjectAssignment> subjects=new ArrayList<>();
+
 
 
 

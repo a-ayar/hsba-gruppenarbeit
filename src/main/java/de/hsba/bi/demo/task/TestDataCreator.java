@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -35,13 +36,14 @@ public class TestDataCreator {
         User uwe = userService.save(new User( "uwe Hoppe", "uwe", "1234", User.TEACHER_ROLE));
 
         // add some subjects
-        Subject subject = subjectService.createSubject("Deutsch", aylin, marc);
-        Subject mathe = subjectService.save(new Subject("Mathe", nils, marc));
+        Subject subject = subjectService.createSubject("Deutsch", aylin, List.of(marc));
+        Subject subject2 = subjectService.createSubject("Mathe", aylin, List.of(marc));
         subjectService.save(subject);
-        subjectService.save(new Subject("Deutsch", andreas, nils));
+        subjectService.save(subject2);
+
 
         // add example Journal for testing
-        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", mathe, "initial"); //String
+        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, "initial"); //String
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33",  aylin));
         taskService.save(task);
 

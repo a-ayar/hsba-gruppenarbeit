@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,9 +36,15 @@ public class CreateSubjectController {
 
     //zum Fachanlegen
     @PostMapping
-    public String create(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") Long studentsid) {
+    public String create(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") List<Long> studentsid) {
         User teacher = userService.getUser(teacherid);
-        User students = userService.getUser(studentsid);
+
+        List<User> students = new ArrayList<>();
+        for (Long id: studentsid
+             ) {
+            User student = userService.getUser(id);
+            students.add(student);
+        }
         Subject subject = subjectService.createSubject(name, teacher, students);
         return "redirect:/subjects/";
     }
