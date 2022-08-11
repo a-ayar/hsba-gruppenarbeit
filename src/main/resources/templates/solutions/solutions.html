@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>  <link rel="stylesheet" type="text/css" href="/static/w3.css"/>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="my-4">
+        <h1> User </h1>
+
+        <p class="small">
+            <a href="/tasks/"> zurück zum Menü</a>
+        </p>
+
+    </div>
+
+        <h3>Bewertung abgeben</h3>
+        <form action="/users/" method="post" class="form-inline">
+            <label for="text">Anmerkung</label>
+            <textarea id="text" name="text" cols="35" rows="4"></textarea>
+            <label for="note">Note</label>
+            <select id="note" class="form-control mr-2" name="note">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Bewerten</button>
+        </form>
+
+
+    </div>
+
+
+</div>
+</body>
+</html>
