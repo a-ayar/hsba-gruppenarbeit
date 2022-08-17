@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>  <link rel="stylesheet" type="text/css" href="/static/w3.css"/>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div>    <div class="my-4">
+        <h1> Bewertung abgeben</h1>
+
+        <p class="small">
+            <a href="/tasks/"> zurück zum Menü</a>
+        </p>
+    </div>
+            <table class="table">
+
+                <tr>
+                    <th>Note</th>
+                    <th>Anmerkung</th>
+                </tr>
+
+                <tr th:each="solution : ${solutions}">
+                    <td th:text="${solution.mark}"></td>
+                    <td th:text="${solution.comment}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <form action="/solutions/" method="post" class="form-inline">
+            <div>
+            <label for="mark">Anmerkung</label> </br>
+            <textarea placeholder="Bemerkung hinzufügen..." id="comment" name="comment" cols="35" rows="4" style="resize: none;"></textarea>
+            </div>
+            <div style="margin: 0 auto;">
+            <label for="mark">Note</label>
+            <select id="mark" class="form-control mr-2" name="mark">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Bewerten</button> </div>
+        </form>
+
+
+    </div>
+
+
+</div>
+</body>
+</html>
