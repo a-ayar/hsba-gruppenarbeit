@@ -10,9 +10,14 @@ import javax.persistence.*;
 @Entity
 public class TaskEntry {
 
-    //Variablen
+    //Variabl für den Status der bearbeitung
+    @Getter
+    @Setter
+    private boolean isOnEdit;
+
     @Id
     @GeneratedValue
+    @Getter
     @Setter(AccessLevel.NONE)
     private Long id;
 
@@ -28,6 +33,7 @@ public class TaskEntry {
     public TaskEntry( String solution, User student) {
         this.solution = solution;
         this.student = student;
+        setOnEdit(false);
     }
 
 }

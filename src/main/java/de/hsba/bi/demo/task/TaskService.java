@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 @Service // da von dieser Klasse ein Objekt erstellt werden soll
 @Transactional
 
-//Service mit den Methoden
 public class TaskService {
 
     private final TaskRepository repository;
@@ -17,7 +16,7 @@ public class TaskService {
         this.repository = repository;
     }
 
-// Aufgabe erstellen
+    // Aufgabe erstellen
     public Task createTask(String title, String description, Subject subject, String status) {
         Task task = new Task();
         task.setTitle(title);
@@ -32,8 +31,25 @@ public class TaskService {
     }
 
     //Aufgabe aufrufen
-    public Task getTask(Long id) {
-        return repository.findById(id).orElse(null);
+    public Task getTask(Long taskId) {
+        return repository.findById(taskId).orElse(null);
+    }
+
+    public void editTask(Long taskId){
+        Task task = getTask(taskId);
+        task.setTaskIsOnEdit(true);
+    }
+
+    public void saveNewTask(Long taskId, String newTitle, String newDescription, Subject newSubject, String newStatus){
+        Task task = getTask(taskId);
+        task.setTitle(newTitle);
+        task.setDescription(newDescription);
+        task.setSubject(newSubject);
+        task.setStatus(newStatus);
+        task.setTaskIsOnEdit(false);}
+
+    public Collection<Task> getAll() {
+        return repository.findAll();
     }
 
     //Lösung eingeben
@@ -42,7 +58,26 @@ public class TaskService {
         task.getEntries().add(entry);
     }
 
-    public Collection<Task> getAll() {
-        return repository.findAll();
+    public TaskEntry getTaskEntry(Long taskId, Long entryId){
+        Task task = repository.getReferenceById(taskId);
+        TaskEntry taskEntry = task.getEntryById(entryId);
+        return taskEntry;
     }
+
+    public void deleteAwnser(Long taskId, Long entryId) {
+        //get current task, get TaskEntry and delete in List
+        TaskEntry entryToRemove = getTaskEntry (taskId, entryId);
+        repository.getReferenceById(taskId).getEntries().remove(entryToRemove);}
+
+
+    public void editAnswer(Long id, Long entryId){
+        TaskEntry taskEntry = getTaskEntry(id, entryId);
+        taskEntry.setOnEdit(true);
+    }
+    public void saveNewAnswer(Long id, Long entryId, String newAnswer){
+        TaskEntry taskEntry = getTaskEntry(id, entryId);
+        taskEntry.setSolution(newAnswer);
+        taskEntry.setOnEdit(false);
+    }
+
 }

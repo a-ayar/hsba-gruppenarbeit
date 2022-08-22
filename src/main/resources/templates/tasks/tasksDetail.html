@@ -1,40 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
     <div class="my-4">
-        <h1> Lösungen </h1>
-
+        <h1>
+            Lösungen zur Aufgabe
+        </h1>
+        <h2 th:text="${task.title}"></h2>
         <p class="small">
-            <a href="/tasks/"> zurück zum Menü</a>
+            <a href="/tasks/">zurück zum Menü</a>
         </p>
     </div>
-
-    <h4 th:if="${task != null and !task.entries.empty}"> Lösungen </h4>
+    <h4 th:if="${task != null and !task.entries.empty}">
+        Lösungen
+    </h4>
     <!-- Tabelle für Fach anzeigen-->
     <table th:if="${task != null and !task.entries.empty}" class="table">
         <tr>
             <th>Id</th>
             <th>Lösung</th>
             <th>Schüler</th>
-
         </tr>
         <tr th:each="entry : ${task.entries}">
             <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student}"></td>
+            <td th:if="${not entry.isOnEdit}">
+                <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/delete'}" method="post" class="form">
+                    <button type="submit" class="btn btn-danger">Löschen</button>
+                </form>
+                <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/edit'}" method="post" class="form">
+                    <button type="submit" class="btn btn-warning">Bearbeiten</button>
+                </form>
+            </td>
+            <td th:if="${entry.isOnEdit}">
+                <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewAnswer'}" method="post" class="form">
+                    <input name="newSolution" type="text" placeholder="Neue Lösung" class="form-control mr-2"><button type="submit" class="btn btn-primary">Speichern</button>
+                </form>
+            </td>
         </tr>
     </table>
     <!-- Antrag für Fach anlegen -->
     <div>
         <hr/>
-        <h4>Lösung eintragen</h4>
+        <h4>
+            Lösung eintragen
+        </h4>
         <form th:action="${'/tasks/' + task.id}" method="post" class="form-inline">
             <input name="solution" type="text" placeholder="Antwort" class="form-control mr-2">
             <select class="form-control mr-2" name="student">
-                <option disabled="disabled" selected="selected">Schüler</option>
+                <option disabled="disabled" selected="selected">
+                    Schüler
+                </option>
                 <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
             </select>
             <button type="submit" class="btn btn-primary">Eintragen</button>

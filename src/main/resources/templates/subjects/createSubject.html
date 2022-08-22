@@ -30,7 +30,7 @@
                     <td th:text="${subject.id}"></td>
                     <td th:text="${subject.name}"></td>
                     <td th:text="${subject.teacher}"></td>
-                  <td><th:block th:each="assignment:${subject.assignments}"><p th:text="assignment.student.name"></p></th:block></td>
+                  <td><th:text th:each="assignment:${subject.assignments}"><p th:text="${assignment.student.name}"></p></th:text></td>
                 </tr>
             </table>
         </div>
@@ -52,7 +52,6 @@
 
 
     </div>
-
 
 
 </div>

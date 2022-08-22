@@ -8,8 +8,8 @@
 
         <h1>Menü</h1>
         <p class="small">
-            <a href="/subjects/"> Fächer anlegen</a><br>
-            <a href="/users/"> Nutzer anlegen</a>
+            <a href="/subjects/"> Fächer verwalten</a><br>
+            <a href="/users/"> Nutzer verwalten</a>
         </p>
     </div>
 
@@ -17,8 +17,8 @@
 
 
     <div>
+        <!--tabelle für die Anzeige der Aufgaben-->
         <table class="table">
-
             <tr>
                 <th>Id</th>
                 <th>Titel</th>
@@ -31,12 +31,34 @@
             <tr th:each="task : ${tasks}">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.title}"></td>
-              <!-- <td> <a th:href="${'/tasks/' + task.id}"
-                       th:text="${task.title}"></a> </td> -->
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.subject}"></td>
                 <td th:text="${task.status}"></td>
-                <td> <a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>
+              <td th:if="${not task.taskIsOnEdit}">
+                    <form th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
+                        <button type="submit" class="btn btn-warning">Bearbeiten</button>
+                    </form>
+                </td>
+               <td th:if="${task.TaskIsOnEdit}">
+                    <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/saveNewTask'}" method="post" class="form">
+                        <input name="newTitle" type="text" placeholder="Neuer Title" class="form-control mr-2">
+                        <input name="newDescription" type="text" placeholder="Neue Beschreibung" class="form-control mr-2">
+                        <select class="form-control mr-2" name="newSubject">
+                            <option disabled="disabled" selected="selected">Fach</option>
+                            <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+                        </select>
+
+                            <select class="form-control mr-2" name="newStatus">
+                                <option disabled="disabled" selected="selected">Status</option>
+                                <option value="initial"> Initial </option>
+                                <option value="veröffentlicht">Veröffentlicht </option>
+                                <option value="geschlossen"> Geschlossen </option>
+                            </select>
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                        <button href="tasks/" class="btn btn-primary">Abbrechen</button>
+                    </form>
+                </td>
+                <td><a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>
             </tr>
         </table>
     </div>
@@ -51,7 +73,7 @@
             </select>
 
             <select class="form-control mr-2" name="status">
-                <option disabled="disabled" selected="selected">Rolle</option>
+                <option disabled="disabled" selected="selected">Status</option>
                 <option value="initial"> Initial </option>
                 <option value="veröffentlicht">Veröffentlicht </option>
                 <option value="geschlossen"> Geschlossen </option>

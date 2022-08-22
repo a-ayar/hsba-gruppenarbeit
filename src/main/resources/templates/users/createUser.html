@@ -33,6 +33,9 @@
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.username}"></td>
                     <td th:text="${user.role}"></td>
+                    <td> <form th:action="${'/users/' + user.id + '/delete'}" method="post" class="form">
+                        <button type="submit" class="btn btn-danger">Löschen</button>
+                    </form></td>
                 </tr>
             </table>
         </div>

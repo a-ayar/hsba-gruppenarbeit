@@ -22,12 +22,12 @@ public class SubjectService {
     // Fach erstellen
     public Subject createSubject(String name, User teacher, List<User> students) {
         Subject subject = new Subject(name, teacher);
-        for (User student: students
-             ) {SubjectAssignment subjectAssignment = new SubjectAssignment();
+        for (User student : students) {
+            SubjectAssignment subjectAssignment = new SubjectAssignment();
             subjectAssignment.setSubjects(subject);
             subjectAssignment.setStudent(student);
             subjectAssignmentRepository.save(subjectAssignment);
-
+            subject.addToAssignments(subjectAssignment); //ergänzung
         }
         return subjectRepository.save(subject);
     }

@@ -48,4 +48,9 @@ public class Subject implements Comparable<Subject> {
     public String toString() {
         return name;
     }
+
+    public void addToAssignments(SubjectAssignment newAssignment){
+        assignments.add(newAssignment); //neue Methode um die Assignment zu übergeben
+    }
+
 }

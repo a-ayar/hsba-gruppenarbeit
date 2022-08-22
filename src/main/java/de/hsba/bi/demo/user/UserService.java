@@ -16,6 +16,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public void delete(Long id) { userRepository.deleteById(id);};
+
     public List<User> findAll() {return userRepository.findAll();}
 
     public List<User> findAllAdmins() {return userRepository.findByRole("Admin");}

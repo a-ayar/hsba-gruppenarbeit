@@ -1,4 +1,4 @@
-package de.hsba.bi.demo.web;
+package de.hsba.bi.demo.web.task;
 
 import de.hsba.bi.demo.subject.Subject;
 import de.hsba.bi.demo.subject.SubjectService;
@@ -34,6 +34,19 @@ public class TasksDetailController {
         Task task = taskService.createTask(title, description, subject, status);
         return "redirect:/tasks/";
     }
+    //bearbeitungs erganzüngen
+    @PostMapping(path = "/{id}/editTask")
+    public String editTask(@PathVariable("id") Long id) {
+        taskService.editTask(id);
+        return "redirect:/tasks/";
+    }
+
+    @PostMapping(path = "/{id}/saveNewTask")
+    public String saveNewTask(@PathVariable("id") Long taskId, @RequestParam(name = "newTitle")String title,  @RequestParam(name = "newDescription")String description, @RequestParam(name = "newSubject")Subject subject,  @RequestParam(name = "newStatus")String status) {
+        taskService.saveNewTask(taskId, title, description, subject, status);
+        return "redirect:/tasks";
+    }
+
 
     @GetMapping(path = "/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
@@ -47,6 +60,28 @@ public class TasksDetailController {
     public String addEntry(@PathVariable("id") Long id, TaskEntry entry) {
         Task task = taskService.getTask(id);
         taskService.addTaskEntry(task, entry);
-        return "redirect:/tasks/" + id;}
+        return "redirect:/tasks/" + id;
+    }
+
+
+    @PostMapping(path = "/{id}/{entryID}/delete")
+    public String delete(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
+        taskService.deleteAwnser(id, entryId);
+        return "redirect:/tasks/{id}";
+    }
+
+
+    @PostMapping(path = "/{id}/{entryID}/edit")
+    public String edit(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
+        taskService.editAnswer(id, entryId);
+        return "redirect:/tasks/{id}";
+    }
+
+    @PostMapping(path = "/{id}/{entryID}/saveNewAnswer")
+    public String saveNewAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId, @RequestParam(name = "newSolution")String solution ) {
+        taskService.saveNewAnswer(id, entryId, solution);
+        return "redirect:/tasks/{id}";
+    }
+
 
 }
