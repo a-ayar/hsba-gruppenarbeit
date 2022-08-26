@@ -8,10 +8,7 @@ import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +44,23 @@ public class CreateSubjectController {
         }
         Subject subject = subjectService.createSubject(name, teacher, students);
         return "redirect:/subjects/";
+    }
+    @PostMapping(path = "/{id}/deleteSubject")
+    public String deleteSubject(@PathVariable("id") Long subjectId) {
+        subjectService.deleteSubject(subjectId);
+        return "redirect:/subjects";
+    }
+
+
+    @PostMapping(path = "/{id}/editSubject")
+    public String editSubject(@PathVariable("id") Long subjectId) {
+        subjectService.editSubject(subjectId);
+        return "redirect:/subjects";
+    }
+
+    @PostMapping(path = "/{id}/saveNewSubject")
+    public String saveNewSubject(@PathVariable("id") Long subjectId, @RequestParam(name = "newName")String newName,  @RequestParam(name = "newTeacher") User newTeacher) {
+        subjectService.saveNewSubject(subjectId, newName, newTeacher);
+        return "redirect:/subjects";
     }
 }

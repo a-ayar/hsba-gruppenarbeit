@@ -30,10 +30,20 @@ public class TaskEntry {
     @ManyToOne(optional = false)
     private User student;
 
+    @Getter
+    @Setter
+    @Basic(optional = false)
+    private Evaluation evaluation;
+
+    @Getter
+    @Setter
+    private String comment;
+
     public TaskEntry( String solution, User student) {
         this.solution = solution;
         this.student = student;
         setOnEdit(false);
+        this.evaluation = Evaluation.UNBENOTET;
     }
 
 }

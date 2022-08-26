@@ -20,13 +20,15 @@
             <th>Id</th>
             <th>Lösung</th>
             <th>Schüler</th>
+            <th>Note</th>
         </tr>
         <tr th:each="entry : ${task.entries}">
             <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student}"></td>
-            <td th:if="${not entry.isOnEdit}">
-                <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/delete'}" method="post" class="form">
+            <td th:text="${entry.evaluation}"></td>
+            <td th:text="${entry.comment}"></td>
+            <td th:if="${not entry.isOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/delete'}" method="post" class="form">
                     <button type="submit" class="btn btn-danger">Löschen</button>
                 </form>
                 <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/edit'}" method="post" class="form">
@@ -35,12 +37,13 @@
             </td>
             <td th:if="${entry.isOnEdit}">
                 <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewAnswer'}" method="post" class="form">
-                    <input name="newSolution" type="text" placeholder="Neue Lösung" class="form-control mr-2"><button type="submit" class="btn btn-primary">Speichern</button>
+                    <input name="newSolution" type="text" placeholder="Neue Lösung" class="form-control mr-2">
+                    <button type="submit" class="btn btn-primary">Speichern</button>
                 </form>
             </td>
         </tr>
     </table>
-    <!-- Antrag für Fach anlegen -->
+    <!-- Antrag für Lösung anlegen -->
     <div>
         <hr/>
         <h4>

@@ -35,11 +35,16 @@
                 <td th:text="${task.subject}"></td>
                 <td th:text="${task.status}"></td>
               <td th:if="${not task.taskIsOnEdit}">
+
+                <td th:if="${not task.taskIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/deleteTask'}" method="post" class="form">
+                    <button type="submit" class="btn btn-danger">Löschen</button>
+
                     <form th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning">Bearbeiten</button>
                     </form>
+            </form>
                 </td>
-               <td th:if="${task.TaskIsOnEdit}">
+               <td th:if="${task.taskIsOnEdit}">
                     <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/saveNewTask'}" method="post" class="form">
                         <input name="newTitle" type="text" placeholder="Neuer Title" class="form-control mr-2">
                         <input name="newDescription" type="text" placeholder="Neue Beschreibung" class="form-control mr-2">
@@ -55,7 +60,6 @@
                                 <option value="geschlossen"> Geschlossen </option>
                             </select>
                         <button type="submit" class="btn btn-primary">Speichern</button>
-                        <button href="tasks/" class="btn btn-primary">Abbrechen</button>
                     </form>
                 </td>
                 <td><a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>

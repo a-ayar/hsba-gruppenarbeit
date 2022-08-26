@@ -34,7 +34,8 @@ public class TasksDetailController {
         Task task = taskService.createTask(title, description, subject, status);
         return "redirect:/tasks/";
     }
-    //bearbeitungs erganzüngen
+
+
     @PostMapping(path = "/{id}/editTask")
     public String editTask(@PathVariable("id") Long id) {
         taskService.editTask(id);
@@ -44,6 +45,12 @@ public class TasksDetailController {
     @PostMapping(path = "/{id}/saveNewTask")
     public String saveNewTask(@PathVariable("id") Long taskId, @RequestParam(name = "newTitle")String title,  @RequestParam(name = "newDescription")String description, @RequestParam(name = "newSubject")Subject subject,  @RequestParam(name = "newStatus")String status) {
         taskService.saveNewTask(taskId, title, description, subject, status);
+        return "redirect:/tasks";
+    }
+
+    @PostMapping(path = "/{id}/deleteTask")
+    public String deleteTask(@PathVariable("id") Long taskId) {
+        taskService.deleteTask(taskId);
         return "redirect:/tasks";
     }
 

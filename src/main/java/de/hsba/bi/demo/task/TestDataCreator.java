@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import de.hsba.bi.demo.solution.Solution;
-import de.hsba.bi.demo.solution.SolutionService;
 
 
 import javax.transaction.Transactional;
@@ -27,7 +25,6 @@ public class TestDataCreator {
     private final UserService userService;
     private final TaskService taskService;
     private final SubjectService subjectService;
-    private final SolutionService solutionService;
 
 
     @EventListener(ApplicationStartedEvent.class)
@@ -46,13 +43,11 @@ public class TestDataCreator {
         subjectService.save(subject2);
 
 
-        // add example Journal for testing
-        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, "initial"); //String
+        // add example Task for testing
+        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, "initial");
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33",  marc));
         taskService.save(task);
 
-        Solution solution= solutionService.createSolution("2", "Guter Lösungsansatz");
-        solutionService.save(solution);
 
     }
 }

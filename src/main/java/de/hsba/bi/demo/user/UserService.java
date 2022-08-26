@@ -31,7 +31,6 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-
     // Fach erstellen
     public User createUser(String name, String username, String password, String role) {
         User user = new User();
@@ -40,6 +39,18 @@ public class UserService {
         user.setPassword(password);
         user.setRole(role);
         return userRepository.save(user);
+    }
+    public void editUser(Long userId){
+        User user = getUser(userId);
+        user.setUserIsOnEdit(true);
+    }
+    public void saveNewUser(Long userId, String newName, String newUsername, String newPassword, String newRole){
+        User user = getUser(userId);
+        user.setName(newName);
+        user.setUsername(newUsername);
+        user.setPassword(newPassword);
+        user.setRole(newRole);
+        user.setUserIsOnEdit(false);
     }
 
 

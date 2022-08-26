@@ -27,9 +27,21 @@ public class CreateUserController {
         return "redirect:/users/";
     }
 
-    @PostMapping(path = "/{id}/delete")
+    @PostMapping(path = "/{id}/deleteUser")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
+        return "redirect:/users";
+    }
+
+    @PostMapping(path = "/{id}/editUser")
+    public String editUser(@PathVariable("id") Long userId) {
+        userService.editUser(userId);
+        return "redirect:/users/";
+    }
+
+    @PostMapping(path = "/{id}/saveNewUser")
+    public String saveNewUser(@PathVariable("id") Long userId, @RequestParam(name = "newName")String name,  @RequestParam(name = "newUsername")String username, @RequestParam(name = "newPassword")String password,  @RequestParam(name = "newRole")String role) {
+        userService.saveNewUser(userId, name, username, password, role);
         return "redirect:/users";
     }
 

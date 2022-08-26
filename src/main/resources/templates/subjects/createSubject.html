@@ -31,6 +31,30 @@
                     <td th:text="${subject.name}"></td>
                     <td th:text="${subject.teacher}"></td>
                   <td><th:text th:each="assignment:${subject.assignments}"><p th:text="${assignment.student.name}"></p></th:text></td>
+                    <td th:if="${not subject.subjectIsOnEdit}"><td th:if="${not subject.subjectIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/subjects/'  + subject.id + '/deleteSubject'}" method="post" class="form">
+                        <button type="submit" class="btn btn-danger">Löschen</button>
+                </form>
+
+                        <form th:action="${'/subjects/' + subject.id + '/editSubject'}" method="post" class="form">
+                            <button type="submit" class="btn btn-warning">Bearbeiten</button>
+                        </form>
+                    </td>
+                    <td th:if="${subject.SubjectIsOnEdit}">
+                        <form style="float:left; margin-right:5px" th:action="${'/subjects/' + subject.id + '/saveNewSubject'}" method="post" class="form">
+                            <input name="newName" type="text" placeholder="Neuer Name" class="form-control mr-2">
+
+                            <select class="form-control mr-2" name="newTeacher">
+                                <option disabled="disabled" selected="selected">Lehrer</option>
+                                <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
+                            </select>
+
+                            <select class="form-control mr-2" name="newSubject">
+                                <option disabled="disabled" selected="selected">Fach</option>
+                                <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Speichern</button>
+                        </form>
+                    </td>
                 </tr>
             </table>
         </div>

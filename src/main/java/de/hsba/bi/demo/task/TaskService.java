@@ -39,14 +39,18 @@ public class TaskService {
         Task task = getTask(taskId);
         task.setTaskIsOnEdit(true);
     }
-
     public void saveNewTask(Long taskId, String newTitle, String newDescription, Subject newSubject, String newStatus){
         Task task = getTask(taskId);
         task.setTitle(newTitle);
         task.setDescription(newDescription);
         task.setSubject(newSubject);
         task.setStatus(newStatus);
-        task.setTaskIsOnEdit(false);}
+        task.setTaskIsOnEdit(false);
+    }
+    // zum löschen einer Aufgabe
+    public void deleteTask(Long taskId){
+        repository.deleteById(taskId);
+    }
 
     public Collection<Task> getAll() {
         return repository.findAll();

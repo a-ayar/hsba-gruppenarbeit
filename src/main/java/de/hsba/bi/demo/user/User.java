@@ -20,6 +20,11 @@ public class User implements Comparable<User> {
     public static String TEACHER_ROLE = "Lehrer";
     public static String ADMIN_ROLE = "Admin";
 
+    //Variabl für den Status der bearbeitung
+    @Getter
+    @Setter
+    private boolean UserIsOnEdit;
+
     @Getter
     @Id
     @GeneratedValue

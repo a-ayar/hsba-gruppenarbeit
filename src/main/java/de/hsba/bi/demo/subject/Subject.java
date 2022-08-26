@@ -1,6 +1,7 @@
 package de.hsba.bi.demo.subject;
 
 //import de.hsba.bi.demo.user.User;
+import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,10 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Subject implements Comparable<Subject> {
+
+    @Getter
+    @Setter
+    private boolean SubjectIsOnEdit;
 
     @Id
     @GeneratedValue
@@ -39,6 +44,15 @@ public class Subject implements Comparable<Subject> {
         this.teacher = teacher;
     }
 
+    public  SubjectAssignment getSubjectAssignmentById(Long subjectAssignmentId) {
+        for(SubjectAssignment subjectAssignment : assignments ){
+            if (subjectAssignment.getId().equals(subjectAssignmentId)){
+                return subjectAssignment;
+            }
+        }
+        return new SubjectAssignment();
+    }
+
     @Override
     public int compareTo(Subject other) {
         return this.name.compareTo(other.name);
@@ -52,5 +66,6 @@ public class Subject implements Comparable<Subject> {
     public void addToAssignments(SubjectAssignment newAssignment){
         assignments.add(newAssignment); //neue Methode um die Assignment zu übergeben
     }
+
 
 }

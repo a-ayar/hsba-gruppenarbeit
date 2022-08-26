@@ -43,7 +43,7 @@ public class Task {
     @Basic(optional = false)
     private String status;
 
-
+//Beziehung die auch bei einer Löschung mitgelöscht werden soll -Aylin
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     private List<TaskEntry> entries;
 
