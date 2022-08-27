@@ -63,12 +63,22 @@ public class TasksDetailController {
     }
 
 
+//    @PostMapping(path = "/{id}")
+//public String addEntry(@PathVariable("id") Long id, TaskEntry entry) {
+//        Task task = taskService.getTask(id);
+//        taskService.addTaskEntry(task, entry);
+//        return "redirect:/tasks/" + id;
+//    }
+
+
+
     @PostMapping(path = "/{id}")
-    public String addEntry(@PathVariable("id") Long id, TaskEntry entry) {
+    public String addEntry(@PathVariable("id") Long id, @RequestParam(name = "solution")String solution, @RequestParam(value = "student")Long student) {
         Task task = taskService.getTask(id);
-        taskService.addTaskEntry(task, entry);
-        return "redirect:/tasks/" + id;
-    }
+        TaskEntry newEntry = new TaskEntry(solution, userService.getUser(student));
+        taskService.addTaskEntry(task, newEntry);
+        return "redirect:/tasks/" + id;}
+
 
 
     @PostMapping(path = "/{id}/{entryID}/delete")
