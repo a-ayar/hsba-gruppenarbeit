@@ -38,6 +38,11 @@ public class CreateUserController {
         userService.editUser(userId);
         return "redirect:/users/";
     }
+    @PostMapping(path = "/{id}/abortEditUser")
+    public String abortEditUser(@PathVariable("id") Long userId) {
+        userService.abortEditUser(userId);
+        return "redirect:/users/";
+    }
 
     @PostMapping(path = "/{id}/saveNewUser")
     public String saveNewUser(@PathVariable("id") Long userId, @RequestParam(name = "newName")String name,  @RequestParam(name = "newUsername")String username, @RequestParam(name = "newPassword")String password,  @RequestParam(name = "newRole")String role) {

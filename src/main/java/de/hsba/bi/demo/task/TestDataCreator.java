@@ -21,7 +21,6 @@ import java.util.Set;
 @Transactional
 public class TestDataCreator {
 
-    //private final TaskRepository taskRepository;
     private final UserService userService;
     private final TaskService taskService;
     private final SubjectService subjectService;
@@ -37,14 +36,14 @@ public class TestDataCreator {
         User uwe = userService.save(new User( "uwe Hoppe", "uwe", "1234", User.TEACHER_ROLE));
 
         // add some subjects
-        Subject subject = subjectService.createSubject("Deutsch", aylin, List.of(marc));
-        Subject subject2 = subjectService.createSubject("Mathe", aylin, List.of(marc));
+        Subject subject = subjectService.createSubject("Deutsch", andreas, List.of(marc));
+        Subject subject2 = subjectService.createSubject("Mathe", andreas, List.of(marc));
         subjectService.save(subject);
         subjectService.save(subject2);
 
 
         // add example Task for testing
-        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, "initial");
+        Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject);
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33",  marc));
         taskService.save(task);
 

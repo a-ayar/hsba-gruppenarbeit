@@ -1,6 +1,7 @@
 package de.hsba.bi.demo.subject;
 
 //import de.hsba.bi.demo.user.User;
+import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.user.User;
 import lombok.Getter;
@@ -31,13 +32,20 @@ public class Subject implements Comparable<Subject> {
 
     @Setter
     @Getter
-    @ManyToOne (optional = false)
+    @ManyToOne (optional = false, fetch = FetchType.LAZY)
     private User teacher;
 
     @Setter
     @Getter
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubjectAssignment> assignments =new ArrayList<>();
+
+    @Getter
+    @Setter
+    @OneToMany (mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks=new ArrayList<>();
+
+
 
     public Subject(String name, User teacher) {
         this.name = name;

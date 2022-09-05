@@ -2,9 +2,11 @@ package de.hsba.bi.demo.user;
 
 import de.hsba.bi.demo.subject.Subject;
 import de.hsba.bi.demo.subject.SubjectAssignment;
+import de.hsba.bi.demo.task.TaskEntry;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -52,11 +54,23 @@ public class User implements Comparable<User> {
     @Basic(optional = false)
     private String role;
 
+    //Wenn ein Schüler gelöscht werden soll dann sollen die Zuweisung der Schüler auch gelöscht werden - Aylin
     @Getter
     @Setter
-    @OneToMany
-    private List<SubjectAssignment> subjects=new ArrayList<>();
+    @OneToMany (mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<SubjectAssignment> subjects=new ArrayList<>();
 
+    //Wenn ein Schüler gelöscht werden soll dann sollen die Antworten der Schüler auch gelöscht werden - Aylin
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskEntry> taskEntries=new ArrayList<>();
+
+    //Wenn ein Lehrer gelöscht werden soll dann sollen die Fächer eines Lehrers auch gelöscht werden - Aylin
+    @Getter
+    @Setter
+    @OneToMany (mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subject> teacherSubjects=new ArrayList<>();
 
 
 

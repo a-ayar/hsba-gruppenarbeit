@@ -53,6 +53,10 @@ public class SubjectService {
         Subject subject = getSubject(subjectId);
         subject.setSubjectIsOnEdit(true);
     }
+    public void abortEditSubject(Long subjectId){
+        Subject subject = getSubject(subjectId);
+        subject.setSubjectIsOnEdit(false);
+    }
     public void saveNewSubject(Long subjectId, String newName, User newTeacher) {
         Subject subject = getSubject(subjectId);
         subject.setName(newName);

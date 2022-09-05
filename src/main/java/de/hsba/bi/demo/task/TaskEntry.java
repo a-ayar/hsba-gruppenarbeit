@@ -10,10 +10,15 @@ import javax.persistence.*;
 @Entity
 public class TaskEntry {
 
-    //Variabl für den Status der bearbeitung
+    //Variable für den Status der Bearbeitung - Aylin
     @Getter
     @Setter
-    private boolean isOnEdit;
+    private boolean answerIsOnEdit;
+
+    //Variable für die bewertung - Aylin
+    @Getter
+    @Setter
+    private boolean evaluationIsOnEdit;
 
     @Id
     @GeneratedValue
@@ -27,7 +32,7 @@ public class TaskEntry {
     @Basic(optional = false)
     private String solution;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User student;
 
     @Getter
@@ -39,10 +44,11 @@ public class TaskEntry {
     @Setter
     private String comment;
 
+//Constructor mit dem Default Wert als unbenotet - Aylin
     public TaskEntry( String solution, User student) {
         this.solution = solution;
         this.student = student;
-        setOnEdit(false);
+        setAnswerIsOnEdit(false);
         this.evaluation = Evaluation.UNBENOTET;
     }
 

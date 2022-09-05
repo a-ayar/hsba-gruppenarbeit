@@ -2,6 +2,7 @@ package de.hsba.bi.demo.task;
 
 
 import de.hsba.bi.demo.subject.Subject;
+import de.hsba.bi.demo.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,10 +11,10 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@NoArgsConstructor //
+@NoArgsConstructor
 public class Task {
 
-    //Variabl für den Status der bearbeitung
+    //Variable für den Status der Bearbeitung - Aylin
     @Getter
     @Setter
     private boolean taskIsOnEdit;
@@ -40,29 +41,28 @@ public class Task {
 
     @Setter
     @Getter
-    @Basic(optional = false)
-    private String status;
+    private Status status;
 
-//Beziehung die auch bei einer Löschung mitgelöscht werden soll -Aylin
+//Wenn eine Aufgabe gelöscht wird, soll auch die abgegebenen Lösungen gelöscht werden -Aylin
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     private List<TaskEntry> entries;
 
-
+   // Methode um alle Antworten einer Aufgabe abzufragen - Aylin
     public List<TaskEntry> getEntries() {
         if (entries == null) {
             entries = new ArrayList<>();
         }
         return entries;
     }
- // neue Ergänzungen:
+ // Methode um eine Antwort einer Aufgabe abzufragen - Aylin
     public TaskEntry getEntryById(Long entryId) {
         for(TaskEntry entry : entries){
             if (entry.getId().equals(entryId)){
                 return entry;
             }
         }
-        //Hier sollte er nicht hinkommen, wenn doch,
-        // ist kein Entry mit der ID vorhanden udn hier sollte stattdessen eine Fehlerbehandlung stattfinden
+        //Hier sollte er nicht hinkommen,
+        // wenn doch, ist kein Entry mit der ID vorhanden udn hier sollte stattdessen eine Fehlerbehandlung stattfinden - Aylin
         return new TaskEntry();
     }
 

@@ -37,53 +37,64 @@
               <td th:if="${not task.taskIsOnEdit}">
 
                 <td th:if="${not task.taskIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/deleteTask'}" method="post" class="form">
-                    <button type="submit" class="btn btn-danger">Löschen</button>
+                    <button type="submit" class="btn btn-danger">Löschen</button></form>
 
                     <form th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning">Bearbeiten</button>
                     </form>
             </form>
                 </td>
+
                <td th:if="${task.taskIsOnEdit}">
-                    <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/saveNewTask'}" method="post" class="form">
-                        <input name="newTitle" type="text" placeholder="Neuer Title" class="form-control mr-2">
-                        <input name="newDescription" type="text" placeholder="Neue Beschreibung" class="form-control mr-2">
-                        <select class="form-control mr-2" name="newSubject">
-                            <option disabled="disabled" selected="selected">Fach</option>
+                    <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/saveNewTask'}" th:object="${taskForm}" method="post" class="form">
+                        <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
+                        <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
+                        <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
                             <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
                         </select>
 
-                            <select class="form-control mr-2" name="newStatus">
-                                <option disabled="disabled" selected="selected">Status</option>
-                                <option value="initial"> Initial </option>
-                                <option value="veröffentlicht">Veröffentlicht </option>
-                                <option value="geschlossen"> Geschlossen </option>
-                            </select>
                         <button type="submit" class="btn btn-primary">Speichern</button>
+                        <label class="text-danger small" th:errors="*{description}" />
+                        <label class="text-danger small" th:errors="*{title}" />
+                        <label class="text-danger small" th:errors="*{subject}" />
+                    </form>
+                   <form th:action="${'/tasks/' + task.id + '/abortEditTask'}" method="post" class="form">
+                       <button type="submit" class="btn btn-warning"> Bearbeitung abbrechen</button>
+                   </form>
+                </td>
+                <td th:if="${not task.taskIsOnEdit}">
+                <td>
+                    <form th:action="${'/tasks/' + task.id + '/publishTask'}" method="post" class="form">
+                        <button type="submit" class="btn btn-warning"> Aufgabe veröffentlichen </button>
                     </form>
                 </td>
+                <td>
+                    <form th:action="${'/tasks/' + task.id + '/closeTask'}" method="post" class="form">
+                        <button type="submit" class="btn btn-warning"> Aufgabe schließen </button>
+                    </form>
+                </td>
+                </td>
+                <div th:if="${task.status.name() == 'GREEN'}">
+                    Green is for go.
+                </div>
+
+
                 <td><a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>
             </tr>
         </table>
     </div>
-    <h3>Aufgabe anlegen</h3>
-        <form action="/tasks/" method="post" class="form-inline">
-            <input name="title" type="text" placeholder="Titel" class="form-control mr-2">
-            <input name="description" type="text" placeholder="Beschreibung" class="form-control mr-2">
-
-            <select class="form-control mr-2" name="subject">
-                <option disabled="disabled" selected="selected">Fach</option>
+  <h3>Aufgabe anlegen</h3>
+        <form action="/tasks/" method="post" class="form-inline" th:object="${taskForm}">
+            <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
+            <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
+            <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
                 <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
             </select>
 
-            <select class="form-control mr-2" name="status">
-                <option disabled="disabled" selected="selected">Status</option>
-                <option value="initial"> Initial </option>
-                <option value="veröffentlicht">Veröffentlicht </option>
-                <option value="geschlossen"> Geschlossen </option>
-            </select>
-
-            <button type="submit" class="btn btn-primary">Erstellen</button>
+            <button type="submit" class="btn btn-primary">Erstellen</button><br>
+            <label class="text-danger small" th:errors="*{description}" />
+            <label class="text-danger small" th:errors="*{title}" />
+            <label class="text-danger small" th:errors="*{subject}" />
         </form>
 
 </div>

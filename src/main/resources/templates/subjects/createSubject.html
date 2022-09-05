@@ -7,9 +7,6 @@
     <div class="my-4">
         <h1> Fächer </h1>
 
-        <p class="small">
-            <a href="/tasks/"> zurück zum Menü</a>
-        </p>
     </div>
     <div>
         <h3>vorhandene Fächer</h3>
@@ -53,6 +50,9 @@
                                 <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
                             </select>
                             <button type="submit" class="btn btn-primary">Speichern</button>
+                        </form>
+                        <form th:action="${'/subjects/' + subject.id + '/abortEditSubject'}" method="post" class="form">
+                            <button type="submit" class="btn btn-warning">Bearbeitung abbrechen</button>
                         </form>
                     </td>
                 </tr>

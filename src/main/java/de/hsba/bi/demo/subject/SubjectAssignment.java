@@ -22,11 +22,11 @@ public class SubjectAssignment {
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private User student;
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Subject subjects;
 }

@@ -10,4 +10,3 @@ interface UserRepository extends JpaRepository<User, Long> {
     @Query("select s from User s where s.role = :role ")
     List<User> findByRole (String role);
 }
-//sql für die abfrage der verschiedenen rollen

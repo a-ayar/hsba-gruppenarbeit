@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <h3>Aufgabe anlegen</h3>
+    <form action="/tasks/" method="post" class="form-inline" th:object="${taskForm}">
+        <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
+        <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
+        <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
+            <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Erstellen</button><br>
+        <label class="text-danger small" th:errors="*{description}" />
+        <label class="text-danger small" th:errors="*{title}" />
+        <label class="text-danger small" th:errors="*{subject}" />
+    </form>
+</div>
+</body>
+</html>

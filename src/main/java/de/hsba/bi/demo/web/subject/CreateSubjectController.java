@@ -30,10 +30,8 @@ public class CreateSubjectController {
         return "subjects/createSubject";
     }
 
-
-    //zum Fachanlegen
     @PostMapping
-    public String create(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") List<Long> studentsid) {
+    public String createSubject(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") List<Long> studentsid) {
         User teacher = userService.getUser(teacherid);
 
         List<User> students = new ArrayList<>();
@@ -55,6 +53,11 @@ public class CreateSubjectController {
     @PostMapping(path = "/{id}/editSubject")
     public String editSubject(@PathVariable("id") Long subjectId) {
         subjectService.editSubject(subjectId);
+        return "redirect:/subjects";
+    }
+    @PostMapping(path = "/{id}/abortEditSubject")
+    public String abortEditSubject(@PathVariable("id") Long subjectId) {
+        subjectService.abortEditSubject(subjectId);
         return "redirect:/subjects";
     }
 
