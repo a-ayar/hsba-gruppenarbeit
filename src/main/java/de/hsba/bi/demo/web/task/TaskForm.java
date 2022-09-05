@@ -23,6 +23,4 @@ public class TaskForm {
 
         private Status status;
 
-
-
     }

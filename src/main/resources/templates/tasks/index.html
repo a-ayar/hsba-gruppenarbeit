@@ -9,7 +9,8 @@
         <h1>Menü</h1>
         <p class="small">
             <a href="/subjects/"> Fächer verwalten</a><br>
-            <a href="/users/"> Nutzer verwalten</a>
+            <a href="/users/"> Nutzer verwalten</a><br>
+            <a href="/tasks/createTask/"> Aufgaben anlegen</a>
         </p>
     </div>
 
@@ -74,15 +75,13 @@
                     </form>
                 </td>
                 </td>
-                <div th:if="${task.status.name() == 'GREEN'}">
-                    Green is for go.
-                </div>
 
 
                 <td><a th:href="${'/tasks/' + task.id}"> Lösung abgeben</a></td>
             </tr>
         </table>
     </div>
+    <!--
   <h3>Aufgabe anlegen</h3>
         <form action="/tasks/" method="post" class="form-inline" th:object="${taskForm}">
             <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
@@ -96,6 +95,7 @@
             <label class="text-danger small" th:errors="*{title}" />
             <label class="text-danger small" th:errors="*{subject}" />
         </form>
+        -->
 
 </div>
 </body>

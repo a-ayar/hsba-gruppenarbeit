@@ -30,8 +30,7 @@ public class TasksDetailController {
 //Abhängigkeiten nutzen - Aylin
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("taskForm", new TaskForm());
-        model.addAttribute("editTaskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin
+        model.addAttribute("taskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin
         return "tasks/index";
     }
 
