@@ -23,6 +23,7 @@ public class UserFormConverter {
         user.setUsername(form.getUsername());
         user.setPassword(form.getPassword());
         user.setRole(form.getRole());
+        user.setUserIsOnEdit(false);
         return user;
     }
 }

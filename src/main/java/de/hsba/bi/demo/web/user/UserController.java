@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class CreateUserController {
+public class UserController {
 
     private final UserService userService;
     private final UserFormConverter userFormConverter;
@@ -25,23 +25,18 @@ public class CreateUserController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("userForm",new UserForm());
-        return "users/createUser";
+        return "users/showUser";
     }
     @ModelAttribute("users")
     public List<User> getUsers(){
         return userService.findAll();
     }
-/*
-    @PostMapping
-    public String create(String name, String username,String password, String role) {
-        User user = userService.createUser(name, username, password, role);
-        return "redirect:/users/";
-    }*/
+
     @PostMapping
     public String create(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
         if (userBinding.hasErrors()){
             model.addAttribute("userForm", userForm);
-            return "/users/createUser";
+            return "/users/showUser";
         }
         userService.save(userFormConverter.update(new User(), userForm));
 
@@ -65,9 +60,14 @@ public class CreateUserController {
         return "redirect:/users/";
     }
 
-    @PostMapping(path = "/{id}/saveNewUser")
-    public String saveNewUser(@PathVariable("id") Long userId, @RequestParam(name = "newName")String name,  @RequestParam(name = "newUsername")String username, @RequestParam(name = "newPassword")String password,  @RequestParam(name = "newRole")String role) {
-        userService.saveNewUser(userId, name, username, password, role);
+@PostMapping(path = "/{id}/saveNewUser")
+    public String saveNewUser(@PathVariable("id") Long userId, @ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
+        if (userBinding.hasErrors()){
+            model.addAttribute("userForm", userForm);
+            return "users/showUser";
+        }
+        User user = userFormConverter.update(userService.getUser(userId), userForm);
+        userService.save(user);
         return "redirect:/users";
     }
 
