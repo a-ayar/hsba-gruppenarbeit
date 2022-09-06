@@ -109,7 +109,7 @@ public class TasksDetailController {
     public String addEntry(@PathVariable("id") Long id,@ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
         if (answerBinding.hasErrors()){
             model.addAttribute("answerForm", answerForm);
-            return "/tasks/" + id;
+            return "/tasks/index";
         }
         Task task = taskService.getTask(id);
         taskService.addTaskEntry( task, answerFormConverter.update(new TaskEntry(), answerForm));

@@ -60,18 +60,21 @@
             </table>
         </div>
         <h3>Neuen User erstellen</h3>
-        <form action="/users/" method="post" class="form-inline">
-            <input name="name" type="text" placeholder="Name" class="form-control mr-2">
-            <input name="username" type="text" placeholder="Username" class="form-control mr-2">
-            <input name="password" type="text" placeholder="Passwort" class="form-control mr-2">
-            <select class="form-control mr-2" name="role">
-                <option disabled="disabled" selected="selected">Rolle</option>
+        <form action="/users/" method="post" class="form-inline" th:object="${userForm}">
+            <input th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" th:field="*{name}" type="text" placeholder="Name" class="form-control mr-2">
+            <input th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}" th:field="*{username}" type="text" placeholder="Username" class="form-control mr-2">
+            <input th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}" th:field="*{password}" type="text" placeholder="Passwort" class="form-control mr-2">
+            <select class="form-control mr-2" th:classappend="${#fields.hasErrors('role') ? 'is-invalid' : ''}" th:field="*{role}">
                 <option value="Lehrer">Lehrer </option>
                 <option value="Schüler">Schüler </option>
                 <option value="Admin"> Admin </option>
             </select>
 
             <button type="submit" class="btn btn-primary">Erstellen</button>
+            <label class="text-danger small" th:errors="*{name}" />
+            <label class="text-danger small" th:errors="*{username}" />
+            <label class="text-danger small" th:errors="*{password}" />
+            <label class="text-danger small" th:errors="*{role}" />
         </form>
 
 

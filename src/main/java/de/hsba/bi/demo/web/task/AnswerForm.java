@@ -1,5 +1,6 @@
 package de.hsba.bi.demo.web.task;
 
+import de.hsba.bi.demo.task.Evaluation;
 import de.hsba.bi.demo.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,4 +17,6 @@ public class AnswerForm {
 
     @NotNull (message = "User fehlt, bitte geben sie ein User an.")
     private User student;
+
+    private Evaluation evaluation;
 }
