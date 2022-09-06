@@ -26,6 +26,17 @@ public class TasksDetailController {
     private final UserService userService;
     private final SubjectService subjectService;
     private final TaskFormConverter taskFormConverter;
+    private final AnswerFormConverter answerFormConverter;
+
+    @ModelAttribute("tasks")
+    public Collection<Task> getTasks(){
+        return taskService.getAll();
+    }
+
+    @ModelAttribute("subjects")
+    public List<Subject> getSubjects(){
+        return subjectService.findAll();
+    }
 
 //Abhängigkeiten nutzen - Aylin
     @GetMapping
@@ -34,33 +45,6 @@ public class TasksDetailController {
         return "tasks/index";
     }
 
-    @ModelAttribute("tasks")
-    public Collection<Task> getTasks(){
-      return taskService.getAll();
-    }
-
-    @ModelAttribute("subjects")
-    public List<Subject> getSubjects(){
-        return subjectService.findAll();
-    }
-
-    /**@PostMapping
-    public String createTask(@RequestParam(name = "title")String title, @RequestParam(name = "description") String description, @RequestParam(name = "subject") Long subjectid) {
-        Subject subject = subjectService.getSubject(subjectid);
-        Task task = taskService.createTask(title, description, subject);
-        return "redirect:/tasks/";
-    }**/
-
-    @PostMapping
-    public String createTask(@ModelAttribute("taskForm") @Valid TaskForm taskForm, BindingResult taskBinding, Model model) {
-        if (taskBinding.hasErrors()){
-            model.addAttribute("taskForm", taskForm);
-            return "tasks/index";
-        }
-        taskService.save(taskFormConverter.update(new Task(), taskForm));
-
-        return "redirect:/tasks/";
-    }
     @PostMapping(path = "/{id}/saveNewTask")
     public String saveNewTask(@PathVariable("id") Long taskId, @ModelAttribute("taskForm") @Valid TaskForm taskForm, BindingResult taskBinding, Model model) {
         if (taskBinding.hasErrors()){
@@ -71,7 +55,6 @@ public class TasksDetailController {
         taskService.save(task);
         return "redirect:/tasks";
     }
-
 
 
     @PostMapping(path = "/{id}/editTask")
@@ -85,12 +68,6 @@ public class TasksDetailController {
         taskService.abortEditTask(id);
         return "redirect:/tasks/";
     }
-
-    /*@PostMapping(path = "/{id}/saveNewTask")
-    public String saveNewTask(@PathVariable("id") Long taskId, @RequestParam(name = "newTitle")String title,  @RequestParam(name = "newDescription")String description, @RequestParam(name = "newSubject")Subject subject) {
-        taskService.saveNewTask(taskId, title, description, subject);
-        return "redirect:/tasks";
-    }*/
 
     @PostMapping(path = "/{id}/deleteTask")
     public String deleteTask(@PathVariable("id") Long taskId) {
@@ -110,22 +87,35 @@ public class TasksDetailController {
         return "redirect:/tasks";
     }
 
-
+    //Answer Abschnitt - Aylin
 
     @GetMapping(path = "/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("students", userService.findAllStudents());//
+        model.addAttribute("students", userService.findAllStudents());
         model.addAttribute("task", taskService.getTask(id));
+        model.addAttribute("answerForm", new AnswerForm());
         return "tasks/tasksDetail";
     }
 
-
+/*
     @PostMapping(path = "/{id}")
     public String addEntry(@PathVariable("id") Long id, @RequestParam(name = "solution")String solution, @RequestParam(value = "student")Long student) {
         Task task = taskService.getTask(id);
         TaskEntry newEntry = new TaskEntry(solution, userService.getUser(student));
         taskService.addTaskEntry(task, newEntry);
         return "redirect:/tasks/" + id;}
+    */
+    @PostMapping(path = "/{id}")
+    public String addEntry(@PathVariable("id") Long id,@ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
+        if (answerBinding.hasErrors()){
+            model.addAttribute("answerForm", answerForm);
+            return "/tasks/" + id;
+        }
+        Task task = taskService.getTask(id);
+        taskService.addTaskEntry( task, answerFormConverter.update(new TaskEntry(), answerForm));
+
+        return "redirect:/tasks/" + id;
+    }
 
 
 
