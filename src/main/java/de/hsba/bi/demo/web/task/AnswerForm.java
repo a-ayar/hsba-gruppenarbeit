@@ -14,6 +14,6 @@ public class AnswerForm {
     @NotBlank(message = "Bitte geben sie eine Antwort ein.")
     private String solution;
 
-    @NotNull (message = "User fehlt")
+    @NotNull (message = "User fehlt, bitte geben sie ein User an.")
     private User student;
 }
