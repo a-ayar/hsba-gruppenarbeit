@@ -9,8 +9,9 @@
         <h1>Menü</h1>
         <p class="small">
             <a href="/subjects/"> Fächer verwalten</a><br>
-            <a href="/users/"> Nutzer verwalten</a><br>
-            <a href="/tasks/createTask/"> Aufgaben anlegen</a>
+            <a href="/users/"> Nutzer bearbeiten</a><br>
+            <a href="/tasks/createTask/"> Aufgaben anlegen</a><br>
+            <a href="/users/createUser/"> User anlegen</a>
         </p>
     </div>
 
@@ -81,21 +82,6 @@
             </tr>
         </table>
     </div>
-    <!--
-  <h3>Aufgabe anlegen</h3>
-        <form action="/tasks/" method="post" class="form-inline" th:object="${taskForm}">
-            <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
-            <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
-            <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
-                <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
-            </select>
-
-            <button type="submit" class="btn btn-primary">Erstellen</button><br>
-            <label class="text-danger small" th:errors="*{description}" />
-            <label class="text-danger small" th:errors="*{title}" />
-            <label class="text-danger small" th:errors="*{subject}" />
-        </form>
-        -->
 
 </div>
 </body>

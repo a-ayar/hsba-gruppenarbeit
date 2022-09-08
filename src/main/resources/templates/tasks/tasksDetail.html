@@ -89,15 +89,13 @@
         <h4>
             Lösung eintragen
         </h4>
-        <form th:action="${'/tasks/' + task.id}" method="post" class="form-inline">
-            <input name="solution" type="text" placeholder="Antwort" class="form-control mr-2">
-            <select class="form-control mr-2" name="student">
-                <option disabled="disabled" selected="selected">
-                    Schüler
-                </option>
+        <form th:action="${'/tasks/' + task.id}" th:object="${answerForm}" method="post" class="form-inline">
+            <input th:classappend="${#fields.hasErrors('solution') ? 'is-invalid' : ''}" th:field="*{solution}" type="text" placeholder="Antwort" class="form-control mr-2">
+            <select class="form-control mr-2" th:classappend="${#fields.hasErrors('student') ? 'is-invalid' : ''}" th:field="*{student}">
                 <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
             </select>
             <button type="submit" class="btn btn-primary">Eintragen</button>
+            <label class="text-danger small" th:errors="*{solution}" />
         </form>
     </div>
     <hr/>
