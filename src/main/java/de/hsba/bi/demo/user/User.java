@@ -18,9 +18,9 @@ import java.util.List;
 public class User implements Comparable<User> {
 
     @Basic(optional = false)
-    public static String STUDENT_ROLE = "Schüler";
-    public static String TEACHER_ROLE = "Lehrer";
-    public static String ADMIN_ROLE = "Admin";
+    public static String STUDENT_ROLE = "SCHÜLER";
+    public static String TEACHER_ROLE = "LEHRER";
+    public static String ADMIN_ROLE = "ADMIN";
 
     //Variabl für den Status der bearbeitung
     @Getter

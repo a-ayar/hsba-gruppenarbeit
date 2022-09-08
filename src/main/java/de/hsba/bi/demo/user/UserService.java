@@ -21,9 +21,9 @@ public class UserService {
     public void delete(Long id) { userRepository.deleteById(id);};
     //Datenbankabfragen - Aylin
     public List<User> findAll() {return userRepository.findAll();}
-    public List<User> findAllAdmins() {return userRepository.findByRole("Admin");}
-    public List<User> findAllTeacher() {return userRepository.findByRole("Lehrer");}
-    public List<User> findAllStudents() {return userRepository.findByRole("Schüler");}
+    public List<User> findAllAdmins() {return userRepository.findByRole("ADMIN");}
+    public List<User> findAllTeacher() {return userRepository.findByRole("LEHRER");}
+    public List<User> findAllStudents() {return userRepository.findByRole("SCHÜLER");}
     public User getUser(Long id) {return userRepository.findById(id).orElse(null);}
     //Speichern - Aylin
     public User save(User user) {return userRepository.save(user);

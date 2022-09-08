@@ -59,7 +59,7 @@
             </table>
         </div>
         <h3> Fach anlegen</h3>
-        <form action="/subjects/" method="post" class="form-inline">
+        <form th:action="${'/subjects/'}"  method="post" class="form-inline">
             <input name="name" type="text" placeholder="Fach" class="form-control mr-2">
 
             <select class="form-control mr-2" name="teacher">

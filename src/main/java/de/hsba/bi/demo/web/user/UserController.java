@@ -25,23 +25,13 @@ public class UserController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("userForm",new UserForm());
-        return "users/showUser";
+        return "admin/showUser";
     }
     @ModelAttribute("users")
     public List<User> getUsers(){
         return userService.findAll();
     }
 
-    @PostMapping
-    public String create(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
-        if (userBinding.hasErrors()){
-            model.addAttribute("userForm", userForm);
-            return "/users/showUser";
-        }
-        userService.save(userFormConverter.update(new User(), userForm));
-
-        return "redirect:/users/";
-    }
 
     @PostMapping(path = "/{id}/deleteUser")
     public String delete(@PathVariable("id") Long id) {

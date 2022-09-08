@@ -27,7 +27,7 @@ public class CreateSubjectController {
         model.addAttribute("subjects", subjectService.findAll());
         model.addAttribute("teachers", userService.findAllTeacher());
         model.addAttribute("students", userService.findAllStudents());
-        return "subjects/createSubject";
+        return "admin/createSubject";
     }
 
     @PostMapping

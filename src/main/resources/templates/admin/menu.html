@@ -16,9 +16,9 @@
         <h1>Sie sind als Admin angemeldet.</h1>
         <h2>Legen Sie neue User an oder erstellen Sie neue Kurse.</h2>
         <p class="small">
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/subjects}"> Fächer verwalten</a><br>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/users}"> Nutzer verwalten</a>
-
+            <a th:href="@{/subjects}"> Fächer verwalten</a><br>
+            <a th:href="@{/users}"> Nutzer bearbeiten</a><br>
+            <a th:href="@{/users/createUser}"> Nutzer erstellen</a>
         </p>
 
         <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">

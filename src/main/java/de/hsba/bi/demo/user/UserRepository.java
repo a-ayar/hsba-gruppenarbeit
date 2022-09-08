@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 interface UserRepository extends JpaRepository<User, Long> {
+    User findByName(String name);
 
     @Query("select s from User s where s.role = :role ")
     List<User> findByRole (String role);

@@ -7,7 +7,7 @@
 <div layout:fragment="content">
     <h1>Aufgabe anlegen</h1>
     <div style="height: 50px; "></div>
-    <form action="/tasks/createTask" method="post" class="form-inline" th:object="${taskForm}">
+    <form th:action="${'/tasks/createTask'}"  method="post" class="form-inline" th:object="${taskForm}">
         <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
         <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
         <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
