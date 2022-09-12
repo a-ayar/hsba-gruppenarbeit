@@ -32,6 +32,16 @@ public class UserController {
         return userService.findAll();
     }
 
+    @PostMapping
+    public String create(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
+        if (userBinding.hasErrors()){
+            model.addAttribute("userForm", userForm);
+            return "/admin/showUser";
+        }
+        userService.save(userFormConverter.update(new User(), userForm));
+
+        return "redirect:/users/";
+    }
 
     @PostMapping(path = "/{id}/deleteUser")
     public String delete(@PathVariable("id") Long id) {
@@ -50,15 +60,16 @@ public class UserController {
         return "redirect:/users/";
     }
 
-@PostMapping(path = "/{id}/saveNewUser")
+    @PostMapping(path = "/{id}/saveNewUser")
     public String saveNewUser(@PathVariable("id") Long userId, @ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
         if (userBinding.hasErrors()){
             model.addAttribute("userForm", userForm);
-            return "users/showUser";
+            return "admin/showUser";
         }
         User user = userFormConverter.update(userService.getUser(userId), userForm);
         userService.save(user);
         return "redirect:/users";
     }
+
 
 }

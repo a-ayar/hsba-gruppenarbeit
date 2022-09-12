@@ -45,10 +45,6 @@
                                 <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
                             </select>
 
-                            <select class="form-control mr-2" name="newSubject">
-                                <option disabled="disabled" selected="selected">Fach</option>
-                                <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
-                            </select>
                             <button type="submit" class="btn btn-primary">Speichern</button>
                         </form>
                         <form th:action="${'/subjects/' + subject.id + '/abortEditSubject'}" method="post" class="form">

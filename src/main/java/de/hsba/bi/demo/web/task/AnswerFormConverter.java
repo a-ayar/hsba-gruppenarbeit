@@ -14,6 +14,7 @@ public class AnswerFormConverter {
         form.setSolution(taskEntry.getSolution());
         form.setStudent(taskEntry.getStudent());
         form.setEvaluation(taskEntry.getEvaluation());
+        form.setComment(taskEntry.getComment());
         return form;
     }
 
@@ -21,6 +22,7 @@ public class AnswerFormConverter {
         taskEntry.setSolution(form.getSolution());
         taskEntry.setStudent(form.getStudent());
         taskEntry.setEvaluation(Evaluation.UNBENOTET);
+        taskEntry.setComment(form.getComment());
         return taskEntry;
     }
 }

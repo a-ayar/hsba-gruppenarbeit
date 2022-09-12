@@ -18,7 +18,7 @@
                 abmelden
             </button>
         </form>
-        <a th:href="@{/tasks/createTask}"> Nutzer erstellen</a>
+        <a th:href="@{/tasks/createTask}"> Aufgabe erstellen</a>
         </div>
         <div sec:authorize="hasRole('SCHÜLER')" class="my-4" style="text-align: center">
 
@@ -57,13 +57,14 @@
                 <td th:text="${task.status}"></td>
               <td th:if="${not task.taskIsOnEdit}">
 
-                <td th:if="${not task.taskIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/deleteTask'}" method="post" class="form">
-                    <button type="submit" class="btn btn-danger">Löschen</button></form>
+                <td  sec:authorize="hasRole('LEHRER')"  th:if="${not task.taskIsOnEdit}">
+                <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/deleteTask'}" method="post" class="form">
+                    <button type="submit" class="btn btn-danger">Löschen</button>
+                </form>
 
-                    <form th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
+                    <form th:if="${task.status.name() == 'INITIAL'}" th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning">Bearbeiten</button>
                     </form>
-            </form>
                 </td>
 
                <td th:if="${task.taskIsOnEdit}">
@@ -84,7 +85,25 @@
                    </form>
                 </td>
                 <td th:if="${not task.taskIsOnEdit}">
-                <td>
+                <div sec:authorize="hasRole('LEHRER')" th:switch="${task.status.name()}">
+
+
+    <form th:case="${'INITIAL'}" th:action="${'/tasks/' + task.id + '/publishTask'}" method="post" class="form">
+        <button type="submit" class="btn btn-warning"> Aufgabe veröffentlichen </button>
+    </form>
+
+                <form th:case="${'VERÖFFENTLICHT'}" th:action="${'/tasks/' + task.id + '/closeTask'}" method="post" class="form">
+                    <button type="submit" class="btn btn-warning"> Aufgabe schließen </button>
+                </form>
+
+                <div th:case="${'GESCHLOSSEN'}" ><a th:href="${'/tasks/' + task.id}"> Zu den Lösungen</a></div>
+
+                </div>
+                </td>
+                <td th:if="${task.status.name() == 'VERÖFFENTLICHT'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Meine Lösung</a></td>
+            </tr>
+                <!--
+                <td th:if="${task.status.name() == 'INITIAL'}">
                     <form th:action="${'/tasks/' + task.id + '/publishTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning"> Aufgabe veröffentlichen </button>
                     </form>
@@ -95,10 +114,9 @@
                     </form>
                 </td>
                 </td>
-
-
-                <td sec:authorize="hasRole('LEHRER')" ><a th:href="${'/tasks/' + task.id}"> Bewerten</a></td>
-            </tr>
+                <td sec:authorize="hasRole('LEHRER')" ><a th:href="${'/tasks/' + task.id}"> Zu den Lösungen</a></td>
+                <td sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Meine Lösung</a></td>
+            </tr>-->
         </table>
     </div>
 

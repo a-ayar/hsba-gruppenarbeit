@@ -109,7 +109,7 @@ public class TasksDetailController {
     public String addEntry(@PathVariable("id") Long id,@ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
         if (answerBinding.hasErrors()){
             model.addAttribute("answerForm", answerForm);
-            return "/tasks/index";
+            return "redirect:/tasks/" + id;
         }
         Task task = taskService.getTask(id);
         taskService.addTaskEntry( task, answerFormConverter.update(new TaskEntry(), answerForm));
@@ -137,11 +137,23 @@ public class TasksDetailController {
         return "redirect:/tasks/{id}";
     }
 
+
+
+
+
+
     @PostMapping(path = "/{id}/{entryID}/saveNewAnswer")
-    public String saveNewAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId, @RequestParam(name = "newSolution")String solution ) {
-        taskService.saveNewAnswer(id, entryId, solution);
+    public String saveNewAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId, @ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model  ) {
+        if (answerBinding.hasErrors()) {
+            model.addAttribute("answerForm", answerForm);
+            return "redirect:/tasks/{id}";
+        }
+        Task task = taskService.getTask(id);
+        TaskEntry taskEntry = answerFormConverter.update(taskService.getTaskEntry(id,entryId), answerForm);
+        taskService.addTaskEntry(task, taskEntry);
         return "redirect:/tasks/{id}";
     }
+
     @PostMapping(path = "/{id}/{entryID}/editEvaluation")
     public String editEvaluation(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.editEvaluation(id, entryId);

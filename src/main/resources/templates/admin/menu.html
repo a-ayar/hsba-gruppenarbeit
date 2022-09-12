@@ -18,7 +18,6 @@
         <p class="small">
             <a th:href="@{/subjects}"> Fächer verwalten</a><br>
             <a th:href="@{/users}"> Nutzer bearbeiten</a><br>
-            <a th:href="@{/users/createUser}"> Nutzer erstellen</a>
         </p>
 
         <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">

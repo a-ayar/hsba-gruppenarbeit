@@ -39,9 +39,13 @@
             </td>
             <!-- Formular zum Bearbeiten der Antwort für den Schüler - Aylin -->
             <td th:if="${entry.answerIsOnEdit}">
-                <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewAnswer'}" method="post" class="form">
-                    <input name="newSolution" type="text" placeholder="Neue Lösung" class="form-control mr-2">
+                <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewAnswer'}" method="post" class="form" th:object="${answerForm}">
+                    <input th:classappend="${#fields.hasErrors('solution') ? 'is-invalid' : ''}" th:field="*{solution}" type="text" placeholder="Neue Lösung" class="form-control mr-2">
+                    <select class="form-control mr-2" th:classappend="${#fields.hasErrors('student') ? 'is-invalid' : ''}" th:field="*{student}">
+                        <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
+                    </select>
                     <button type="submit" class="btn btn-primary">Speichern</button>
+                    <label class="text-danger small" th:errors="*{solution}" />
                 </form>
                 <!--Bearbeitung abbrechen button-->
                 <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/abortEditAnswer'}" method="post" class="form">
@@ -52,7 +56,7 @@
             <!-- Spalte mit Funktionen für den Lehrer - Aylin -->
 
             <td th:if="${not entry.evaluationIsOnEdit}">
-                <!-- Bewertung eingeben/bearbeiten Button für den Schüler - Aylin -->
+                <!-- Bewertung eingeben/bearbeiten Button für den Lehrer - Aylin -->
                 <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
                     <button type="submit" class="btn btn-warning">Bewerten</button>
                 </form>
@@ -62,7 +66,6 @@
                 <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewEvaluation'}" method="post" class="form">
 
                     <select class="form-control mr-2" name="newEvaluation">
-                        <option disabled="disabled" selected="selected">UNBENOTET</option>
                         <option value="SEHRGUT"> Sehr gut </option>
                         <option value="GUT"> Gut </option>
                         <option value="DURCHSCHNITTLICH"> Durchschnittlich </option>
