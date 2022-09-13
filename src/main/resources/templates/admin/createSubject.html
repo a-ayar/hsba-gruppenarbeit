@@ -26,7 +26,7 @@
                 <tr th:each="subject : ${subjects}">
                     <td th:text="${subject.id}"></td>
                     <td th:text="${subject.name}"></td>
-                    <td th:text="${subject.teacher}"></td>
+                    <td th:text="${subject.teacher.name}"></td>
                   <td><th:text th:each="assignment:${subject.assignments}"><p th:text="${assignment.student.name}"></p></th:text></td>
                     <td th:if="${not subject.subjectIsOnEdit}"><td th:if="${not subject.subjectIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/subjects/'  + subject.id + '/deleteSubject'}" method="post" class="form">
                         <button type="submit" class="btn btn-danger">Löschen</button>

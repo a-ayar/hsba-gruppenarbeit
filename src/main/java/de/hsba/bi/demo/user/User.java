@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +23,14 @@ public class User implements Comparable<User> {
     public static String STUDENT_ROLE = "SCHÜLER";
     public static String TEACHER_ROLE = "LEHRER";
     public static String ADMIN_ROLE = "ADMIN";
+
+    public static String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+        return null;
+    }
 
     //Variabl für den Status der bearbeitung
     @Getter
@@ -83,12 +93,12 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User other) {
-        return this.name.compareTo(other.name);
+        return this.username.compareTo(other.username);
     }
 
     @Override
     public String toString() {
-        return name;
+        return username;
     }
 
 

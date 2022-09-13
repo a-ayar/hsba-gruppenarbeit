@@ -8,6 +8,7 @@ import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.task.TaskService;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,7 +45,7 @@ public class TasksDetailController {
         model.addAttribute("taskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin
         return "tasks/index";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/saveNewTask")
     public String saveNewTask(@PathVariable("id") Long taskId, @ModelAttribute("taskForm") @Valid TaskForm taskForm, BindingResult taskBinding, Model model) {
         if (taskBinding.hasErrors()){
@@ -56,31 +57,31 @@ public class TasksDetailController {
         return "redirect:/tasks";
     }
 
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/editTask")
     public String editTask(@PathVariable("id") Long id) {
         taskService.editTask(id);
         return "redirect:/tasks/";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/abortEditTask")
     public String abborteditTask(@PathVariable("id") Long id) {
         taskService.abortEditTask(id);
         return "redirect:/tasks/";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/deleteTask")
     public String deleteTask(@PathVariable("id") Long taskId) {
         taskService.deleteTask(taskId);
         return "redirect:/tasks";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/publishTask")
     public String publishTask(@PathVariable("id") Long taskId) {
         taskService.publishTask(taskId);
         return "redirect:/tasks";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/closeTask")
     public String closeTask(@PathVariable("id") Long taskId) {
         taskService.closeTask(taskId);
@@ -105,6 +106,7 @@ public class TasksDetailController {
         taskService.addTaskEntry(task, newEntry);
         return "redirect:/tasks/" + id;}
     */
+@PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}")
     public String addEntry(@PathVariable("id") Long id,@ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
         if (answerBinding.hasErrors()){
@@ -118,19 +120,21 @@ public class TasksDetailController {
     }
 
 
-
+    @PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}/{entryID}/deleteAnswer")
     public String deleteAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.deleteAnswer(id, entryId);
         return "redirect:/tasks/{id}";
     }
 
-
+    @PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}/{entryID}/editAnswer")
     public String editAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.editAnswer(id, entryId);
         return "redirect:/tasks/{id}";
     }
+
+    @PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}/{entryID}/abortEditAnswer")
     public String abortEditAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.abortEditAnswer(id, entryId);
@@ -141,7 +145,7 @@ public class TasksDetailController {
 
 
 
-
+    @PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}/{entryID}/saveNewAnswer")
     public String saveNewAnswer(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId, @ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model  ) {
         if (answerBinding.hasErrors()) {
@@ -153,18 +157,19 @@ public class TasksDetailController {
         taskService.addTaskEntry(task, taskEntry);
         return "redirect:/tasks/{id}";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/{entryID}/editEvaluation")
     public String editEvaluation(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.editEvaluation(id, entryId);
         return "redirect:/tasks/{id}";
     }
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/{entryID}/abortEditEvaluation")
     public String abortEditEvaluation(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {
         taskService.abortEditEvaluation(id, entryId);
         return "redirect:/tasks/{id}";
     }
-
+    @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/{entryID}/saveNewEvaluation")
     public String saveNewEvaluation(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId, @RequestParam(name = "newEvaluation")Evaluation evaluation, @RequestParam(name = "comment") String comment) {
         taskService.saveNewEvaluation(id, entryId, evaluation, comment);

@@ -17,7 +17,7 @@ public class UserAdapterService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByName(username);
+        User user = repository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

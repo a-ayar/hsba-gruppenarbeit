@@ -6,6 +6,7 @@ import de.hsba.bi.demo.user.User;
 import de.hsba.bi.demo.user.UserService;
 import de.hsba.bi.demo.web.task.TaskForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Verwaltungssystem</title>
@@ -13,7 +14,9 @@
                                               padding: 30px;
                                               text-align: center;
 color: white;"> Verwaltungssystem <p class="small">
-    <a href="/tasks/">zurück zum Menü</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">zurück zum Menü</a>
+    <a sec:authorize="hasRole('SCHÜLER')" th:href="@{/tasks}">zurück zum Menü</a>
+    <a sec:authorize="hasRole('LEHRER')" th:href="@{/tasks}">zurück zum Menü</a>
 </p> </div>
 <div class="container" layout:fragment="content"></div>
 <div layout:fragment="footer"   style="background-color: #032d57; text-align: center; padding: 20px; color: white; position: absolute; bottom: 0; width: 100%;">
