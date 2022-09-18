@@ -6,6 +6,7 @@ import de.hsba.bi.demo.task.Evaluation;
 import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.task.TaskService;
+import de.hsba.bi.demo.user.User;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +39,8 @@ public class TasksDetailController {
     public List<Subject> getSubjects(){
         return subjectService.findAll();
     }
+    @ModelAttribute("loggedInStudent")
+    public User findCurrentStudent() {return userService.findCurrentUser();}
 
 //Abhängigkeiten nutzen - Aylin
     @GetMapping
@@ -98,23 +101,16 @@ public class TasksDetailController {
         return "tasks/tasksDetail";
     }
 
-/*
-    @PostMapping(path = "/{id}")
-    public String addEntry(@PathVariable("id") Long id, @RequestParam(name = "solution")String solution, @RequestParam(value = "student")Long student) {
-        Task task = taskService.getTask(id);
-        TaskEntry newEntry = new TaskEntry(solution, userService.getUser(student));
-        taskService.addTaskEntry(task, newEntry);
-        return "redirect:/tasks/" + id;}
-    */
+
 @PreAuthorize("hasRole('SCHÜLER')")
     @PostMapping(path = "/{id}")
-    public String addEntry(@PathVariable("id") Long id,@ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
+    public String addEntry(@PathVariable("id") Long id, @ModelAttribute("answerForm") @Valid AnswerForm answerForm, BindingResult answerBinding, Model model) {
         if (answerBinding.hasErrors()){
             model.addAttribute("answerForm", answerForm);
             return "redirect:/tasks/" + id;
         }
         Task task = taskService.getTask(id);
-        taskService.addTaskEntry( task, answerFormConverter.update(new TaskEntry(), answerForm));
+        taskService.addTaskEntry( task, answerFormConverter.update(new TaskEntry(), answerForm, findCurrentStudent()));
 
         return "redirect:/tasks/" + id;
     }
@@ -153,10 +149,11 @@ public class TasksDetailController {
             return "redirect:/tasks/{id}";
         }
         Task task = taskService.getTask(id);
-        TaskEntry taskEntry = answerFormConverter.update(taskService.getTaskEntry(id,entryId), answerForm);
+        TaskEntry taskEntry = answerFormConverter.update(taskService.getTaskEntry(id,entryId), answerForm, findCurrentStudent());
         taskService.addTaskEntry(task, taskEntry);
         return "redirect:/tasks/{id}";
     }
+
     @PreAuthorize("hasRole('LEHRER')")
     @PostMapping(path = "/{id}/{entryID}/editEvaluation")
     public String editEvaluation(@PathVariable("id") Long id, @PathVariable("entryID") Long entryId) {

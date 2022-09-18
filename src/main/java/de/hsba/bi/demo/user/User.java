@@ -100,12 +100,4 @@ public class User implements Comparable<User> {
     public String toString() {
         return username;
     }
-
-    public static String getCurrentUsername() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        }
-        return null;
-    }
 }

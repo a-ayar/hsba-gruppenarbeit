@@ -20,4 +20,6 @@ public class AnswerForm {
     private Evaluation evaluation;
 
     private String comment;
+
+    private Boolean answerIsOnEdit;
 }
