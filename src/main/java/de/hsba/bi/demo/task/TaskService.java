@@ -1,6 +1,7 @@
 package de.hsba.bi.demo.task;
 
 import de.hsba.bi.demo.subject.Subject;
+import de.hsba.bi.demo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -13,6 +14,7 @@ import javax.transaction.Transactional;
 public class TaskService {
 
     private final TaskRepository repository;
+    private final TaskEntryRepository entryRepository;
 
     //Methoden für verschiedene Funktionen - Aylin
     // zum löschen einer Aufgabe -Aylin
@@ -35,12 +37,12 @@ public class TaskService {
     }
 
     // Aufgabe erstellen - Aylin
-    public Task createTask(String title, String description, Subject subject) {
+    public Task createTask(String title, String description, Subject subject, Status status) {
         Task task = new Task();
         task.setTitle(title);
         task.setDescription(description);
         task.setSubject(subject);
-        task.setStatus(Status.INITIAL);
+        task.setStatus(status);
         return repository.save(task);
     }
     //Aufgabe veröffentlichen - Aylin
@@ -86,7 +88,7 @@ public class TaskService {
         TaskEntry taskEntry = task.getEntryById(entryId);
         return taskEntry;
     }
-    //Antwort löschen - Aylin
+        //Antwort löschen - Aylin
     public void deleteAnswer(Long taskId, Long entryId) {
         //get current task, get TaskEntry and delete in List - Aylin
         TaskEntry entryToRemove = getTaskEntry (taskId, entryId);

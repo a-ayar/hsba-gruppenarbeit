@@ -15,7 +15,6 @@ public class AnswerForm {
     @NotBlank(message = "Bitte geben sie eine Antwort ein.")
     private String solution;
 
-    @NotNull
     private User student;
 
     private Evaluation evaluation;

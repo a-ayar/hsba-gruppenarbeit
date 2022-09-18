@@ -52,6 +52,7 @@ public class UserService {
         user.setRole(newRole);
         user.setUserIsOnEdit(false);
     }
-
-
+    public User findCurrentUser() {
+        return userRepository.findByName(User.getCurrentUsername());
+    }
 }

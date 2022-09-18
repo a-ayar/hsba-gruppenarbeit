@@ -1,12 +1,21 @@
 package de.hsba.bi.demo.task;
 
+import lombok.Getter;
+
 public enum Evaluation {
-    UNBENOTET,
-    SEHRGUT,
-    GUT,
-    DURCHSCHNITTLICH,
-    AUSREICHEND,
-    MANGELHAFT,
-    UNGENÜGEND
+    UNBENOTET ("unbenoted"),
+    SEHRGUT ("Sehr gut"),
+    GUT("Gut"),
+    DURCHSCHNITTLICH ("Durchschnittlich"),
+    AUSREICHEND ("Ausreichend"),
+    MANGELHAFT ("Mangelhaft"),
+    UNGENÜGEND("Ungenügend");
+
+    @Getter
+    private final String name;
+
+    Evaluation(String name) {
+        this.name = name;
+    }
 }
 

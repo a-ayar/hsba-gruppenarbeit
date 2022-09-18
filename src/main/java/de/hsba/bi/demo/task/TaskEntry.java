@@ -26,11 +26,13 @@ public class TaskEntry {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+
     @ManyToOne(optional = false)
     private Task task;
 
     @Basic(optional = false)
     private String solution;
+
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User student;

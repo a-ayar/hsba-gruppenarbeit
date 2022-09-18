@@ -3,6 +3,7 @@ package de.hsba.bi.demo.web.task;
 import de.hsba.bi.demo.task.Evaluation;
 import de.hsba.bi.demo.task.Status;
 import de.hsba.bi.demo.task.TaskEntry;
+import de.hsba.bi.demo.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,9 +19,9 @@ public class AnswerFormConverter {
         return form;
     }
 
-    TaskEntry update(TaskEntry taskEntry, AnswerForm form) {
+    TaskEntry update(TaskEntry taskEntry, AnswerForm form, User student) {
         taskEntry.setSolution(form.getSolution());
-        taskEntry.setStudent(form.getStudent());
+        taskEntry.setStudent(student);
         taskEntry.setEvaluation(Evaluation.UNBENOTET);
         taskEntry.setComment(form.getComment());
         return taskEntry;
