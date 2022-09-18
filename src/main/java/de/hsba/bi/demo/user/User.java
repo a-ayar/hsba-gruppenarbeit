@@ -24,6 +24,14 @@ public class User implements Comparable<User> {
     public static String TEACHER_ROLE = "LEHRER";
     public static String ADMIN_ROLE = "ADMIN";
 
+    public static String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+        return null;
+    }
+
     //Variabl für den Status der bearbeitung
     @Getter
     @Setter
@@ -85,12 +93,12 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User other) {
-        return this.name.compareTo(other.name);
+        return this.username.compareTo(other.username);
     }
 
     @Override
     public String toString() {
-        return name;
+        return username;
     }
 
     public static String getCurrentUsername() {

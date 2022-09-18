@@ -6,6 +6,7 @@ import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskService;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/tasks/createTask")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('LEHRER')")
 public class CreateTaskController {
 
     private final TaskService taskService;
