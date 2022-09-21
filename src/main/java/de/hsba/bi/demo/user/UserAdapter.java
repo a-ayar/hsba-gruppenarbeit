@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @RequiredArgsConstructor
-class UserAdapter implements UserDetails {
+public class UserAdapter implements UserDetails {
 
     private final User user;
 
@@ -27,6 +27,8 @@ class UserAdapter implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+    public Long getId() {return user.getId();}
 
     @Override
     public boolean isAccountNonExpired() {

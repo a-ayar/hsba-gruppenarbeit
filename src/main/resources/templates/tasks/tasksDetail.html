@@ -22,7 +22,7 @@
             <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student.name}"></td>
-            <td th:text="${entry.evaluation}"></td>
+            <td th:text="${entry.evaluation.name}"></td>
             <td th:text="${entry.comment}"></td>
 
             <!-- Spalte mit Funktionen für den Schüler - Aylin -->
@@ -62,7 +62,12 @@
             <td th:if="${entry.evaluationIsOnEdit}">
                 <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewEvaluation'}" method="post" class="form">
 
-                    <select class="form-control mr-2" name="newEvaluation">
+                    <select name="newEvaluation">
+                        <option th:each="evaluationOpt : ${T(de.hsba.bi.demo.task.Evaluation).values()}"
+                                th:value="${evaluationOpt}" th:text="${evaluationOpt.name}"></option>
+                    </select>
+
+                    <!--<select class="form-control mr-2" name="newEvaluation">
                         <option value="SEHRGUT"> Sehr gut </option>
                         <option value="GUT"> Gut </option>
                         <option value="DURCHSCHNITTLICH"> Durchschnittlich </option>
@@ -70,7 +75,7 @@
                         <option value="MANGELHAFT"> Mangelgaft </option>
                         <option value="UNGENÜGEND"> Ungenügend </option>
 
-                    </select>
+                    </select>-->
 
                     <input name="comment" type="text" placeholder="Kommentar" class="form-control mr-2">
                     <button type="submit" class="btn btn-primary">Speichern</button>

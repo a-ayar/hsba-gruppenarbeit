@@ -2,15 +2,19 @@ package de.hsba.bi.demo.web.subject;
 
 import de.hsba.bi.demo.subject.Subject;
 import de.hsba.bi.demo.subject.SubjectService;
-import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.user.User;
+import de.hsba.bi.demo.user.UserAdapter;
+import de.hsba.bi.demo.user.UserAdapterService;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +27,8 @@ public class CreateSubjectController {
 
     private final SubjectService subjectService;
     private final UserService userService;
+    private final SubjectFormConverter subjectFormConverter;
+    private final UserAdapterService userAdapterService;
 
     @GetMapping
     public String index(Model model) {
@@ -45,6 +51,20 @@ public class CreateSubjectController {
         Subject subject = subjectService.createSubject(name, teacher, students);
         return "redirect:/subjects/";
     }
+
+/*
+    @PostMapping
+    public String createSubject(@ModelAttribute("subjectForm") @Valid SubjectForm subjectForm, BindingResult subjectBinding, Model model) {
+        if (subjectBinding.hasErrors()){
+            model.addAttribute("subjectForm", subjectForm);
+            return "admin/createSubject";
+        }
+        subjectService.save(subjectFormConverter.update(new Subject(), subjectForm));
+
+        return "redirect:/tasks/";
+    }
+*/
+
     @PostMapping(path = "/{id}/deleteSubject")
     public String deleteSubject(@PathVariable("id") Long subjectId) {
         subjectService.deleteSubject(subjectId);

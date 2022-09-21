@@ -1,10 +1,10 @@
 package de.hsba.bi.demo.task;
 
 import de.hsba.bi.demo.subject.Subject;
-import de.hsba.bi.demo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
+import java.util.List;
 import javax.transaction.Transactional;
 
 @Service // da von dieser Klasse ein Objekt erstellt werden soll - Aylin
@@ -16,7 +16,6 @@ public class TaskService {
     private final TaskRepository repository;
     private final TaskEntryRepository entryRepository;
 
-    //Methoden für verschiedene Funktionen - Aylin
     // zum löschen einer Aufgabe -Aylin
     public void deleteTask(Long taskId){
         repository.deleteById(taskId);
@@ -26,10 +25,24 @@ public class TaskService {
     public Task getTask(Long taskId) {
         return repository.findById(taskId).orElse(null);
     }
-    //Aufgaben aufrufen - Aylin
+
+    //Alle Aufgaben aufrufen - Aylin
     public Collection<Task> getAll() {
         return repository.findAll();
     }
+
+    //Alle Aufgaben des eingeloggten Lehrers aufrufen - Marc
+    public Collection<Task> getTaskById(Long id) {
+        return repository.findTasksByTeacherId(id);
+    }
+
+    //Alle Aufgaben eines eingeloggten Schülers - Marc
+    public Collection<Task> getTaskByStuId(Long id) {return repository.findTasksByStudentId(id);}
+
+    //Alle Antworten eines Schülers auf eine Aufgabe - Marc
+    public List<TaskEntry> getTaskEntriesByStudentId(Long studentId, Long taskId) {return entryRepository.findTaskEntriesByStudentId(studentId, taskId);}
+
+
 
     //Aufgabe speicher speichern - Aylin
     public Task save(Task task) {

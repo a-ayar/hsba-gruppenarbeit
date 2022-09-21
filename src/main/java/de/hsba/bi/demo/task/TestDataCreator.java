@@ -35,19 +35,20 @@ public class TestDataCreator {
         //user
         User marc = createUser("Marc Schümann", "Marc", "password", User.TEACHER_ROLE);
         User aylin = createUser ("Aylin Ayar", "Aylin", "password", User.STUDENT_ROLE);
+        User leon = createUser("Leon Meier", "Leon", "password", User.STUDENT_ROLE);
         createUser ("Nils Voß", "Nils", "password", User.ADMIN_ROLE);
 
 
         // add some subjects
-        Subject subject = subjectService.createSubject("Deutsch", aylin, List.of(marc));
-        Subject subject2 = subjectService.createSubject("Mathe", aylin, List.of(marc));
+        Subject subject = subjectService.createSubject("Deutsch", marc, List.of(aylin, leon));
+        Subject subject2 = subjectService.createSubject("Mathe", marc, List.of(aylin, leon));
         subjectService.save(subject);
         subjectService.save(subject2);
 
 
         // add example Task for testing
         Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, Status.VERÖFFENTLICHT);
-        taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33", marc));
+        taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33", aylin));
         taskService.save(task);
 
     }

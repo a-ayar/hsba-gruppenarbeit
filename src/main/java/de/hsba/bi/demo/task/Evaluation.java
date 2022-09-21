@@ -3,7 +3,7 @@ package de.hsba.bi.demo.task;
 import lombok.Getter;
 
 public enum Evaluation {
-    UNBENOTET ("unbenoted"),
+    UNBENOTET ("Unbenoted"),
     SEHRGUT ("Sehr gut"),
     GUT("Gut"),
     DURCHSCHNITTLICH ("Durchschnittlich"),

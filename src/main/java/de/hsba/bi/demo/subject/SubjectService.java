@@ -33,21 +33,27 @@ public class SubjectService {
         }
         return subjectRepository.save(subject);
     }
-    //Aufgabe speicher --> für testdata
+    //Aufgabe speicher --> für testdata - Aylin
     public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
 
-    //Aufgabe aufrufen
+    //Aufgabe aufrufen - Aylin
     public Subject getSubject(Long id) {
         return subjectRepository.findById(id).orElse(null);
     }
-    //wird nicht verwendet
+
     public SubjectAssignment getSubjectAssignment (Long subjectId, Long assignmentId){
         Subject subject = subjectRepository.getReferenceById(subjectId);
         SubjectAssignment subjectAssignment = subject.getSubjectAssignmentById(assignmentId);
         return subjectAssignment;
     }
+    //Die Facher eines Lehrers - Marc
+    public List<Subject> getSubjectById(Long id) {return subjectRepository.findSubjectByTeacherId(id);}
+
+    //Die Fächer eines Schülers - Marc
+    public List<Subject> getSubjectByStuId(Long id) {return subjectRepository.findSubjectByStudentId(id);}
+
 
     public void editSubject(Long subjectId){
         Subject subject = getSubject(subjectId);

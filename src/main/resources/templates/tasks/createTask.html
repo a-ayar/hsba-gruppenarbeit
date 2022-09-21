@@ -11,7 +11,7 @@
         <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
         <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
         <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
-            <option th:each="subject : ${subjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+            <option th:each="subject : ${teacherSubjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
         </select>
 
         <button type="submit" class="btn btn-primary">Erstellen</button><br>

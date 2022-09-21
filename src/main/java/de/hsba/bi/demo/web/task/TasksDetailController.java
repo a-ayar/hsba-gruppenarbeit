@@ -7,9 +7,13 @@ import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.task.TaskService;
 import de.hsba.bi.demo.user.User;
+import de.hsba.bi.demo.user.UserAdapter;
+import de.hsba.bi.demo.user.UserAdapterService;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,20 +33,57 @@ public class TasksDetailController {
     private final SubjectService subjectService;
     private final TaskFormConverter taskFormConverter;
     private final AnswerFormConverter answerFormConverter;
+    private final UserAdapterService userAdapterService;
 
+    //Alle Aufgaben - Aylin
     @ModelAttribute("tasks")
     public Collection<Task> getTasks(){
         return taskService.getAll();
-    }
-
+    } //ohne String id als parameter übrgabe
+    //Alle Fächer - Aylin
     @ModelAttribute("subjects")
     public List<Subject> getSubjects(){
         return subjectService.findAll();
     }
+    //Eingelogter User beim angeben der Antworten - Aylin
     @ModelAttribute("loggedInStudent")
     public User findCurrentStudent() {return userService.findCurrentUser();}
+    //Die Aufgaben eines Lehrers - Marc
+    @ModelAttribute("teacherTasks")
+    public Collection<Task> getTeacherTasks() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
 
-//Abhängigkeiten nutzen - Aylin
+        return taskService.getTaskById(userAdapter.getId());
+    }
+    //Die Aufgaben des Schülers - Marc
+    @ModelAttribute("studentTasks")
+    public Collection<Task> getStudentTasks() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+
+        return taskService.getTaskByStuId(userAdapter.getId());
+    }
+    //Die Fächer eines Lehrers - Marc
+    @ModelAttribute("teacherSubjects")
+    public List<Subject> getStudentSubjects() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+
+        return subjectService.getSubjectByStuId(userAdapter.getId());
+    }
+
+
+
+    //@ModelAttribute("studentEntries")
+    //@PostMapping(path = "/{id}")
+    //public List<TaskEntry> getStudentEntry() {
+    //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+
+    // return taskService.getTaskEntriesByStudentId(userAdapter.getId(), taskService.getTask());
+    // }
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("taskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin
@@ -136,9 +177,6 @@ public class TasksDetailController {
         taskService.abortEditAnswer(id, entryId);
         return "redirect:/tasks/{id}";
     }
-
-
-
 
 
     @PreAuthorize("hasRole('SCHÜLER')")

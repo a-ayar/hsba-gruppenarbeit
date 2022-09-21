@@ -4,9 +4,13 @@ import de.hsba.bi.demo.subject.Subject;
 import de.hsba.bi.demo.subject.SubjectService;
 import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskService;
+import de.hsba.bi.demo.user.UserAdapter;
+import de.hsba.bi.demo.user.UserAdapterService;
 import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +31,23 @@ public class CreateTaskController {
     private final TaskService taskService;
     private final TaskFormConverter taskFormConverter;
     private final SubjectService subjectService;
+    private final UserAdapterService userAdapterService;
 
     @ModelAttribute("subjects")
     public List<Subject> getSubjects(){
         return subjectService.findAll();
     }
+
+
+
+    @ModelAttribute("teacherSubjects")
+    public List<Subject> getTeacherSubjects() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+
+        return subjectService.getSubjectById(userAdapter.getId());
+    }
+
 
     @GetMapping
     public String index(Model model) {

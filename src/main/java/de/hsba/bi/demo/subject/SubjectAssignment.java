@@ -29,4 +29,9 @@ public class SubjectAssignment {
     @Setter
     @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Subject subjects;
+
+public SubjectAssignment(User student, Subject subject){
+    this.student = student;
+    this.subjects = subject;
+}
 }
