@@ -47,6 +47,7 @@ public class TestDataCreator {
 
 
         // add example Task for testing
+        Task initialtask = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, Status.INITIAL);
         Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, Status.VERÖFFENTLICHT);
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33", aylin));
         taskService.save(task);

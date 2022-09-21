@@ -4,14 +4,14 @@ import lombok.Getter;
 
 public enum Status {
     INITIAL ("initial"),
-    VERÖFFENTLICHT ("veröffenticht"),
+    VERÖFFENTLICHT ("veröffenlticht"),
     GESCHLOSSEN ("geschlossen");
 
     @Getter
-    private final String displayValue;
+    private final String name;
 
     private Status(String displayValue) {
-        this.displayValue = displayValue;
+        this.name = displayValue;
     }
 
 }

@@ -9,7 +9,7 @@
 
         <h1> Willkommen!</h1>
         <h1>Sie sind als Lehrer angemeldet.</h1>
-        <h2>Legen Sie neue Aufgaben an und bewerten Sie abgegebene LÃ¶sungen.</h2>
+        <h2>Legen Sie neue Aufgaben an und bewerten Sie abgegebene Lösungen.</h2>
         <p class="small">
         </p>
         <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">
@@ -24,7 +24,7 @@
 
         <h1> Willkommen!</h1>
         <h1>Sie sind als Schüler angemeldet.</h1>
-        <h2>LÃ¶sen Sie Augaben und sehen Sie sich ihre Benotung an</h2>
+        <h2>Lösen Sie Augaben und sehen Sie sich ihre Benotung an</h2>
         <p class="small">
         </p>
         <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">
@@ -38,7 +38,7 @@
 
 
     <div>
-        <!--tabelle fÃ¼r die Anzeige der Aufgaben-->
+        <!--tabelle für die Anzeige der Aufgaben-->
         <table sec:authorize="hasRole('LEHRER')" class="table">
             <tr>
                 <th>Id</th>
@@ -115,7 +115,7 @@
 
             </tr>
 
-            <tr th:each="task : ${studentTasks}">
+            <tr th:each="task : ${studentTasks}" th:if="${task.status.name() != 'INITIAL'}">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.title}"></td>
                 <td th:text="${task.description}"></td>
