@@ -62,21 +62,10 @@
             <td th:if="${entry.evaluationIsOnEdit}">
                 <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/saveNewEvaluation'}" method="post" class="form">
 
-                    <select name="newEvaluation">
+                    <select name="newEvaluation" class="form-control mr-2">
                         <option th:each="evaluationOpt : ${T(de.hsba.bi.demo.task.Evaluation).values()}"
                                 th:value="${evaluationOpt}" th:text="${evaluationOpt.name}"></option>
                     </select>
-
-                    <!--<select class="form-control mr-2" name="newEvaluation">
-                        <option value="SEHRGUT"> Sehr gut </option>
-                        <option value="GUT"> Gut </option>
-                        <option value="DURCHSCHNITTLICH"> Durchschnittlich </option>
-                        <option value="AUSREICHEND"> Ausreichend </option>
-                        <option value="MANGELHAFT"> Mangelgaft </option>
-                        <option value="UNGENÜGEND"> Ungenügend </option>
-
-                    </select>-->
-
                     <input name="comment" type="text" placeholder="Kommentar" class="form-control mr-2">
                     <button type="submit" class="btn btn-primary">Speichern</button>
                 </form>
