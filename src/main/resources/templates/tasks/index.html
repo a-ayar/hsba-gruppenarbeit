@@ -97,11 +97,10 @@
                             <button type="submit" class="btn btn-warning"> Aufgabe schließen </button>
                         </form>
 
-                        <div th:case="${'GESCHLOSSEN'}" ><a th:href="${'/tasks/' + task.id}"> Zu den Lösungen</a></div>
+                        <div th:case="${'GESCHLOSSEN'}" ><a th:href="${'/tasks/' + task.id}"> Lösungen bewerten</a></div>
 
                     </div>
                 </td>
-                <td th:if="${task.status.name() == 'VERÖFFENTLICHT'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Meine Lösung</a></td>
             </tr>
         </table>
         <!--Ausgabe Aufgaben Schüler -Marc -->
@@ -121,7 +120,9 @@
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.subject}"></td>
                 <td th:text="${task.status.name}"></td>
-                <td th:if="${task.status.name() == 'VERÖFFENTLICHT'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Meine Lösung</a></td>
+                <td th:if="${task.status.name() == 'VERÖFFENTLICHT'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Lösung abgeben/bearbeiten</a></td>
+                <td th:if="${task.status.name() == 'GESCHLOSSEN'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Bewertung/Antwort einsehen </a></td>
+
             </tr>
     </div>
 

@@ -10,8 +10,9 @@
     <h4 th:if="${task != null and !task.entries.empty}">
         Lösungen
     </h4>
-    <!-- Tabelle für Fach anzeigen-->
-    <table th:if="${task != null and !task.entries.empty}" class="table">
+    <!-- Tabelle für die Schüler anzeigen-->
+    <h1 th:if="${task.entries.empty}">Sie haben keine Antwort abgegeben</h1>
+    <table th:if="${!taskEntries.empty}" class="table">
         <tr>
             <th>Id</th>
             <th>Lösung</th>
@@ -29,11 +30,12 @@
 
             <td th:if="${not entry.answerIsOnEdit}">
                 <!-- Antwort Löschen Button für den Schüler - Aylin -->
-                <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/deleteAnswer'}" method="post" class="form">
+
+                <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/deleteAnswer'}" method="post" class="form" th:if="${task.status.name() != 'GESCHLOSSEN'}">
                     <button type="submit" class="btn btn-danger">Löschen</button>
                 </form>
                 <!-- Antwort Bearbeiten Button für den Schüler - Aylin -->
-                <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editAnswer'}" method="post" class="form">
+                <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editAnswer'}" method="post" class="form" th:if="${task.status.name() != 'GESCHLOSSEN'}">
                     <button type="submit" class="btn btn-warning">Bearbeiten</button>
                 </form>
             </td>
@@ -80,7 +82,7 @@
     <!-- Antrag für Lösung anlegen - Aylin -->
     <hr/>
 
-        <div>
+        <div th:if="${taskEntries.empty and task.status.name() != 'GESCHLOSSEN'}">
         <h4>
             Lösung eintragen
         </h4>
