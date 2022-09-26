@@ -18,7 +18,7 @@
             <th>Schüler</th>
             <th>Note</th>
         </tr>
-        <tr th:each="entry : ${task.entries}">
+        <tr th:each="entry : ${taskEntries}">
             <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student.name}"></td>
@@ -78,8 +78,9 @@
     </table>
 
     <!-- Antrag für Lösung anlegen - Aylin -->
-    <div>
-        <hr/>
+    <hr/>
+
+        <div>
         <h4>
             Lösung eintragen
         </h4>
@@ -89,7 +90,8 @@
             <button type="submit" class="btn btn-primary">Eintragen</button>
             <label class="text-danger small" th:errors="*{solution}" />
         </form>
-    </div>
+        </div>
+
     <hr/>
 </div>
 </body>

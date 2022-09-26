@@ -73,17 +73,6 @@ public class TasksDetailController {
         return subjectService.getSubjectByStuId(userAdapter.getId());
     }
 
-
-
-    //@ModelAttribute("studentEntries")
-    //@PostMapping(path = "/{id}")
-    //public List<TaskEntry> getStudentEntry() {
-    //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    // UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
-
-    // return taskService.getTaskEntriesByStudentId(userAdapter.getId(), taskService.getTask());
-    // }
-
     @GetMapping
     public String index(Model model) {
         model.addAttribute("taskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin
@@ -139,6 +128,11 @@ public class TasksDetailController {
         model.addAttribute("students", userService.findAllStudents());
         model.addAttribute("task", taskService.getTask(id));
         model.addAttribute("answerForm", new AnswerForm());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+        model.addAttribute("taskEntries", taskService.getTaskEntriesByStudentId(userAdapter.getId(), id));
+
         return "tasks/tasksDetail";
     }
 

@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface TaskEntryRepository extends JpaRepository<TaskEntry, Long> {
 
-    @Query(value = "SELECT SOLUTION FROM TASK_ENTRY WHERE STUDENT_ID = :student AND TASK_ID = :task", nativeQuery = true)
+    @Query(value = "SELECT * FROM TASK_ENTRY WHERE STUDENT_ID = :student AND TASK_ID = :task", nativeQuery = true)
     List<TaskEntry> findTaskEntriesByStudentId(Long student, Long task);
+
 
 }
