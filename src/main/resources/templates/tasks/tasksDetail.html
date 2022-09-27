@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div layout:fragment="content">
-    <div class="my-4">
-        <h2 th:text="${ 'Aufgabe: '+ task.description}">
-        </h2>
-        <p th:text="${ 'Beschreibung: '+ task.description}"></p>
+    <div class="space"></div>
+    <!--Aufgabenbeschreibung Banner- Nils-->
+    <div style="background-color: #032d57; color: white;box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2); height:70px; text-align: center; width:80%; margin:auto;">
+        <h3 style="margin-top: 17px; display: inline-block;"  th:text="${ 'Aufgabe: '+ task.title}"></h3>
     </div>
+    <div class="card" style="box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2); width:80%; margin:auto;">
+        <div class="card-body">
+            <h5 class="card-title"> Beschreibung</h5>
+            <p class="card-text" th:text="${task.description}"></p>
+        </div>
+    </div>
+    <div class="space"></div>
 <!--tabelle für den Lehrer-->
-    <table th:if="${!task.entries.empty}" class="table">
+    <table sec:authorize="hasRole('LEHRER')" th:if="${!task.entries.empty}" class="table table-striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <thead style="background-color: #032d57; color: white;">
         <tr>
-            <th>Id</th>
             <th>Lösung</th>
             <th>Schüler</th>
             <th>Note</th>
+            <th></th>
+            <th></th>
         </tr>
+        </thead>
         <tr th:each="entry : ${task.entries}">
-            <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student.name}"></td>
             <td th:text="${entry.evaluation.name}"></td>
@@ -25,11 +34,11 @@
 
             <td th:if="${not entry.evaluationIsOnEdit}">
                 <!-- Bewertung eingeben/bearbeiten Button für den Lehrer - Aylin -->
-                <form th:if="${entry.evaluation.name == 'Unbenoted'}" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
-                    <button type="submit" class="btn btn-warning">Bewerten</button>
+                <form th:if="${entry.evaluation.name == 'Unbenotet'}" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
+                    <button type="submit" class="btn btn-success">Bewerten</button>
                 </form>
-                <form th:if="${entry.evaluation.name != 'Unbenoted'}" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
-                    <button type="submit" class="btn btn-warning">Bewerten bearbeiten</button>
+                <form th:if="${entry.evaluation.name != 'Unbenotet'}" th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
+                    <button type="submit" class="btn btn-warning">Bewertung bearbeiten</button>
                 </form>
             </td>
             <!-- Formular zum Bearbeiten der Bewertung für den Lehrer - Aylin -->
@@ -51,18 +60,24 @@
         </tr>
     </table>
             <!-- Tabelle für die Schüler anzeigen-->
-    <h4 th:if="${task != null and !task.entries.empty}">Lösungen</h4>
-
-    <h1 th:if="${task.entries.empty}">Sie haben keine Antwort abgegeben</h1>
-    <table th:if="${!taskEntries.empty}" class="table">
+    <div style="width:80%; margin:auto;">
+    <h4 sec:authorize="hasRole('SCHÜLER')" th:if="${task != null and !task.entries.empty}"> Deine Lösung</h4>
+        </div>
+    <div sec:authorize="hasRole('LEHRER')" style="margin:auto;width:80%;">
+        <h1 th:if="${task.entries.empty}">Es wurden keine Lösungen abgegeben</h1>
+    </div>
+    <table th:if="${!taskEntries.empty}" class="table" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); width:80%; margin:auto;">
+  <thead style="background-color: #032d57; color: white;">
         <tr>
-            <th>Id</th>
             <th>Lösung</th>
             <th>Schüler</th>
             <th>Note</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
+  </thead>
         <tr th:each="entry : ${taskEntries}">
-            <td th:text="${entry.id}"></td>
             <td th:text="${entry.solution}"></td>
             <td th:text="${entry.student.name}"></td>
             <td th:text="${entry.evaluation.name}"></td>
@@ -72,10 +87,11 @@
 
             <td th:if="${not entry.answerIsOnEdit}">
                 <!-- Antwort Löschen Button für den Schüler - Aylin -->
-
                 <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/'+  entry.id + '/deleteAnswer'}" method="post" class="form" th:if="${task.status.name() != 'GESCHLOSSEN'}">
                     <button type="submit" class="btn btn-danger">Löschen</button>
                 </form>
+                </td>
+            <td th:if="${not entry.answerIsOnEdit}">
                 <!-- Antwort Bearbeiten Button für den Schüler - Aylin -->
                 <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editAnswer'}" method="post" class="form" th:if="${task.status.name() != 'GESCHLOSSEN'}">
                     <button type="submit" class="btn btn-warning">Bearbeiten</button>
@@ -91,15 +107,6 @@
                 <!--Bearbeitung abbrechen button-->
                 <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/abortEditAnswer'}" method="post" class="form">
                     <button type="submit" class="btn btn-warning"> Bearbeitung abbrechen</button>
-                </form>
-            </td>
-
-            <!-- Spalte mit Funktionen für den Lehrer - Aylin -->
-
-            <td th:if="${not entry.evaluationIsOnEdit}">
-                <!-- Bewertung eingeben/bearbeiten Button für den Lehrer - Aylin -->
-                <form th:action="${'/tasks/' + task.id + '/'+  entry.id + '/editEvaluation'}" method="post" class="form">
-                    <button type="submit" class="btn btn-warning">Bewerten</button>
                 </form>
             </td>
             <!-- Formular zum Bearbeiten der Bewertung für den Lehrer - Aylin -->
@@ -122,21 +129,23 @@
     </table>
 
     <!-- Antrag für Lösung anlegen - Aylin -->
-    <hr/>
-
-        <div th:if="${taskEntries.empty and task.status.name() != 'GESCHLOSSEN'}">
-        <h4>
-            Lösung eintragen
-        </h4>
-        <form th:action="${'/tasks/' + task.id}" th:object="${answerForm}" method="post" class="form-inline">
-            <input th:classappend="${#fields.hasErrors('solution') ? 'is-invalid' : ''}" th:field="*{solution}" type="text" placeholder="Antwort" class="form-control mr-2">
-
-            <button type="submit" class="btn btn-primary">Eintragen</button>
-            <label class="text-danger small" th:errors="*{solution}" />
+        <div th:if="${taskEntries.empty and task.status.name() != 'GESCHLOSSEN'}" class="card" style="margin:auto; width: 80%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight: bold;">Lösung abgeben</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Geben Sie die Lösung für die Aufgabe an. Sie können die Lösung danach noch bearbeiten.</h6>
+                <p class="card-text">
+        <form th:action="${'/tasks/' + task.id}" th:object="${answerForm}" method="post">
+               <div class="form-group" style="width:100%;">
+                <textarea style="width:100%; min-height:200px;" th:classappend="${#fields.hasErrors('solution') ? 'is-invalid' : ''}" th:field="*{solution}" type="text" placeholder="Lösung" class="form-control"></textarea>
+                    <label class="text-danger small" th:errors="*{solution}" />
+                </div>
+                 <div class="form-group">
+                    <button type="submit" class="btn custom">Abgeben</button><br>
+                 </div>
         </form>
+                </p>
+            </div>
         </div>
-
-    <hr/>
 </div>
 </body>
 </html>

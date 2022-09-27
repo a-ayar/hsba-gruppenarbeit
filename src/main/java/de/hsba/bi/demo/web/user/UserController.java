@@ -1,10 +1,7 @@
 package de.hsba.bi.demo.web.user;
 
-import de.hsba.bi.demo.subject.Subject;
-import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.user.User;
 import de.hsba.bi.demo.user.UserService;
-import de.hsba.bi.demo.web.task.TaskForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -50,28 +47,4 @@ public class UserController {
         userService.delete(id);
         return "redirect:/users";
     }
-
-    @PostMapping(path = "/{id}/editUser")
-    public String editUser(@PathVariable("id") Long userId) {
-        userService.editUser(userId);
-        return "redirect:/users/";
-    }
-    @PostMapping(path = "/{id}/abortEditUser")
-    public String abortEditUser(@PathVariable("id") Long userId) {
-        userService.abortEditUser(userId);
-        return "redirect:/users/";
-    }
-
-    @PostMapping(path = "/{id}/saveNewUser")
-    public String saveNewUser(@PathVariable("id") Long userId, @ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
-        if (userBinding.hasErrors()){
-            model.addAttribute("userForm", userForm);
-            return "admin/showUser";
-        }
-        User user = userFormConverter.update(userService.getUser(userId), userForm);
-        userService.save(user);
-        return "redirect:/users";
-    }
-
-
 }

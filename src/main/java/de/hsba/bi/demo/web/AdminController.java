@@ -1,4 +1,4 @@
-package de.hsba.bi.demo;
+package de.hsba.bi.demo.web;
 
 
 import lombok.RequiredArgsConstructor;

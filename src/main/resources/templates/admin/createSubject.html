@@ -1,79 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
+      layout:decorate="~{layout}"
+     style="height:100%">
+<script src="/js/multi-select-dropdown.js"></script>
+<body style="display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;">
 <div layout:fragment="content">
-    <div class="my-4">
-        <h1> Fächer </h1>
+    <!--Platzhalter- Nils-->
+    <div class="space"></div>
+    <div class="card user">
+        <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">Kurse erstellen</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Legen Sie neue Kurse an und weisen Sie ihnen Schüler und Lehrer zu.</h6>
+        <p class="card-text">
+            <form th:action="${'/subjects/'}"  method="post">
+            <div class="form-row">
+                <!-- Fach auswählen Formular- Nils-->
+                <div class="form-group col-md-6">
+                    <label for="fach">Fach</label>
+                    <select name="name" id="fach" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                        <option>Deutsch</option>
+                        <option>Mathe</option>
+                        <option>Geschichte</option>
+                        <option>Englisch</option>
+                        <option>Informatik</option>
+                        <option>Latein</option>
+                        <option>Biologie</option>
+                        <option>Physik</option>
+                        <option>Chemie</option>
+                        <option>Französisch</option>
+                        <option>Geografie</option>
+                        <option>Sozialkunde</option>
+                        <option>Wirtschaft</option>
+                    </select>
+                </div>
+                <!--Lehrer auswählen Formular- Nils-->
+                <div class="form-group col-md-6">
+                    <label for="teacher">Lehrer</label>
+                    <select class="form-control mr-2" name="teacher" id="teacher">
+                        <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
+                    </select>
+                </div></div>
+                <div class="form-row">
+                    <!-- Schüler auswählen Formular-->
+                    <div class="form-group col-md-8">
+                        <label for="dropdownSelected">Schüler</label> <br>
+                <select multiple name="students" search='true' id="dropdownSelected" aria-describedby="studentHelp" required>
+                    <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
+                </select>
+                        <small id="studentHelp" class="form-text text-muted">Sie können auch nach Schülern suchen.</small>
+                <button type="submit" class="btn custom">Erstellen</button>
+                    </div></div>
+        </form></div></div>
 
-    </div>
     <div>
-        <h3>vorhandene Fächer</h3>
 
-
-        <div>
-            <table class="table">
-
+        <div class="space"></div>
+        <div style="width:80%; margin:auto;">
+            <!-- Tabelle für alle Fächer im System- Nils-->
+            <table class="table table-striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+             <thead style="background-color: #032d57; color: white;">
                 <tr>
-                    <th>Id</th>
+                    <th>Kursnummer</th>
                     <th>Fach</th>
                     <th>Lehrer</th>
                     <th>Schüler</th>
-
+                    <th></th>
                 </tr>
-
+             </thead>
                 <tr th:each="subject : ${subjects}">
                     <td th:text="${subject.id}"></td>
                     <td th:text="${subject.name}"></td>
                     <td th:text="${subject.teacher.name}"></td>
                   <td><th:text th:each="assignment:${subject.assignments}"><p th:text="${assignment.student.name}"></p></th:text></td>
-                    <td th:if="${not subject.subjectIsOnEdit}"><td th:if="${not subject.subjectIsOnEdit}"><form style="float:left; margin-right:5px" th:action="${'/subjects/'  + subject.id + '/deleteSubject'}" method="post" class="form">
+                    <td> <form style="float:left; margin-right:5px" th:action="${'/subjects/'  + subject.id + '/deleteSubject'}" method="post" class="form">
                         <button type="submit" class="btn btn-danger">Löschen</button>
-                </form>
-
-                        <form th:action="${'/subjects/' + subject.id + '/editSubject'}" method="post" class="form">
-                            <button type="submit" class="btn btn-warning">Bearbeiten</button>
-                        </form>
-                    </td>
-                    <td th:if="${subject.SubjectIsOnEdit}">
-                        <form style="float:left; margin-right:5px" th:action="${'/subjects/' + subject.id + '/saveNewSubject'}" method="post" class="form">
-                            <input name="newName" type="text" placeholder="Neuer Name" class="form-control mr-2">
-
-                            <select class="form-control mr-2" name="newTeacher">
-                                <option disabled="disabled" selected="selected">Lehrer</option>
-                                <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
-                            </select>
-
-                            <button type="submit" class="btn btn-primary">Speichern</button>
-                        </form>
-                        <form th:action="${'/subjects/' + subject.id + '/abortEditSubject'}" method="post" class="form">
-                            <button type="submit" class="btn btn-warning">Bearbeitung abbrechen</button>
-                        </form>
-                    </td>
+                </form></td>
                 </tr>
             </table>
         </div>
-        <h3> Fach anlegen</h3>
-        <form th:action="${'/subjects/'}"  method="post" class="form-inline">
-            <input name="name" type="text" placeholder="Fach" class="form-control mr-2">
-
-            <select class="form-control mr-2" name="teacher">
-                <option disabled="disabled" selected="selected">Lehrer</option>
-                <option th:each="teacher : ${teachers}" th:text="${teacher.name}" th:value="${teacher.id}"></option>
-            </select>
-
-            <select class="form-control mr-2" name="students" multiple="multiple">
-                <option disabled="disabled" selected="selected">Schüler</option>
-                <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
-            </select>
-            <button type="submit" class="btn btn-primary">Erstellen</button>
-        </form>
-
-
     </div>
-
-
+    <div class="space"></div>
 </div>
 </body>
 </html>

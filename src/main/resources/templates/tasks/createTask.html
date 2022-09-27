@@ -3,22 +3,41 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <body>
-
 <div layout:fragment="content">
-    <h1>Aufgabe anlegen</h1>
-    <div style="height: 50px; "></div>
-    <form th:action="${'/tasks/createTask'}"  method="post" class="form-inline" th:object="${taskForm}">
-        <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
-        <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
-        <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
-            <option th:each="subject : ${teacherSubjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
-        </select>
-
-        <button type="submit" class="btn btn-primary">Erstellen</button><br>
-        <label class="text-danger small" th:errors="*{description}" />
-        <label class="text-danger small" th:errors="*{title}" />
-        <label class="text-danger small" th:errors="*{subject}" />
-    </form>
+    <!--Platzhalter- Nils-->
+    <div style="width: 80%; margin-top: 150px;"></div>
+    <!--Karte für Formular- Nils-->
+    <div class="card" style="margin:auto; width: 80%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">Aufgabe anlegen</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Legen Sie für ihre Fächer Aufgaben an</h6>
+            <p class="card-text">
+                <!--Formular für die Aufgabenerstellung- Nils-->
+            <form th:action="${'/tasks/createTask'}"  method="post" th:object="${taskForm}">
+                <div class="form-group">
+                    <label  for="title">Titel</label>
+                    <input id="title" th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel eingeben" class="form-control">
+                    <label class="text-danger small" th:errors="*{title}" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Beschreibung</label>
+                    <textarea id="description" th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung hinzufügen" class="form-control" aria-describedby="descriptionHelp" >Beschreibung </textarea>
+                    <small id="descriptionHelp" class="form-text text-muted">Geben sie eine möglichst genaue Beschreibung ein.</small>
+                    <label class="text-danger small" th:errors="*{description}" />
+                </div>
+                <div class="form-group">
+                    <label  for="subject">Fach</label>
+                    <select id="subject" th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control">
+                        <option value="">Fach auswählen</option>
+                        <option th:each="subject : ${teacherSubjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
+                    </select>
+                        <label class="text-danger small" th:errors="*{subject}" />
+                </div>
+                <button type="submit" class="btn custom">Erstellen</button><br>
+            </form>
+            </p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package de.hsba.bi.demo;
+package de.hsba.bi.demo.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,6 @@ public class DefaultController {
         if (request.isUserInRole("ADMIN")) {
             return "redirect:/admin/";
         }
-        return "redirect:/tasks/";
+        return "redirect:/welcome";
     }
 }

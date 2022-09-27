@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum Status {
     INITIAL ("initial"),
-    VERÖFFENTLICHT ("veröffenlticht"),
+    VERÖFFENTLICHT ("veröffentlicht"),
     GESCHLOSSEN ("geschlossen");
 
     @Getter

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -15,9 +16,9 @@ public class UserForm {
     @NotBlank(message = "Bitte geben sie einen Usernamen ein")
     private String username;
 
-    @NotBlank(message = "Bitte geben sie ein Passwort ein")
+    @Size(min= 4, message = "Passwort enthält zu wenig Zeichen")
     private String password;
 
-    @NotBlank(message = "Bitte geben sie eine Rolle ein")
+    @NotBlank(message = "Bitte wählen Sie eine Rolle")
     private String role;
 }

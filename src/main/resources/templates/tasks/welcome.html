@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head> </head>
+
+<body style="height:100vh; margin:0; display:flex; flex-direction:column;">
+<div layout:fragment="content">
+    <!-- Willkommen Banner- Nils-->
+    <div class="card card2">
+        <div th:style="'background: url(/images/books.png)'">
+            <div class="my-4" style="text-align: center; color: white;">
+                <h1 style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"> Willkommen!</h1>
+                <h1 sec:authorize="hasRole('SCHÜLER')" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Sie sind als Schüler angemeldet.</h1>
+                <h1 sec:authorize="hasRole('LEHRER')" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Sie sind als Lehrer angemeldet.</h1>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; margin-top: 50px;"></div>
+    <!--Auswahlkarten für den Lehrer- Nils-->
+    <div sec:authorize="hasRole('LEHRER')" class="row" style="position:center;">
+    <div class="card info">
+        <img class="card-img-top" style="height:214px;" src="/images/classroom.jpg">
+        <div class="card-body">
+            <h5 class="card-title">Aufgabe erstellen</h5>
+            <p class="card-text">Legen Sie als Lehrer umfangreiche Aufgaben für ihre Kurse an, die ihre Schüler lösen sollen.</p>
+            <a th:href="@{/tasks/createTask}" class="btn custom">Erstellen</a>
+        </div>
+    </div>
+
+    <div class="card info">
+        <img class="card-img-top" src="/images/teacher.jpg">
+        <div class="card-body">
+            <h5 class="card-title">Aufgaben managen</h5>
+            <p class="card-text">Alle Aufgaben auf einen Blick. Hier können Sie Aufgaben bearbeiten und Lösungen einsehen. </p>
+            <a th:href="@{/tasks/}" class="btn custom">Bearbeiten</a>
+        </div>
+        </div>
+    </div>
+    <!--Auswahlkarten für den Schüler- Nils-->
+    <div sec:authorize="hasRole('SCHÜLER')" class="row" style="position:center;">
+        <div class="card info">
+            <img class="card-img-top" style="height:214px;" src="/images/classroom.jpg">
+            <div class="card-body">
+                <h5 class="card-title">Deine Aufgaben</h5>
+                <p class="card-text">Hier siehst du alle Aufgaben die dir zugeordnet sind und deine Noten.</p>
+                <a th:href="@{/tasks/}" class="btn custom">Lösen</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -6,7 +6,6 @@ import de.hsba.bi.demo.task.Task;
 import de.hsba.bi.demo.task.TaskService;
 import de.hsba.bi.demo.user.UserAdapter;
 import de.hsba.bi.demo.user.UserAdapterService;
-import de.hsba.bi.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

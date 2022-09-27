@@ -5,63 +5,52 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div layout:fragment="content">
-    <div sec:authorize="hasRole('LEHRER')" class="my-4" style="text-align: center">
-
-        <h1> Willkommen!</h1>
-        <h1>Sie sind als Lehrer angemeldet.</h1>
-        <h2>Legen Sie neue Aufgaben an und bewerten Sie abgegebene Lösungen.</h2>
-        <p class="small">
-        </p>
-        <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">
-            <button class="btn btn-sm btn-link" type="submit">
-                <span th:text="${#httpServletRequest.remoteUser}" />
-                abmelden
-            </button>
-        </form>
-        <a th:href="@{/tasks/createTask}"> Aufgabe erstellen</a>
+    <div class="space"></div>
+<div style="background-color: #032d57; color: white;box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2); height:70px; text-align: center;">
+    <h3 style="margin-top: 17px; display: inline-block;">Alle Aufgaben auf einen Blick.</h3>
+</div>
+    <div class="card" style="box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);">
+    <div sec:authorize="hasRole('LEHRER')" class="card-body">
+    <h5 class="card-title">Aufgaben managen</h5>
+    <p class="card-text"> Nachdem Sie eine Aufgabe veröffentlichen, ist diese für ihre Schüler sichtbar. Die Schüler haben solange die Möglichkeit die Aufgabe zu lösen, bis Sie sie schließen. Danach können die Lösungen bewertet werden. </p>
+        <p class="card-text text-muted"> Lösungen die nach dem Schließen nicht aufgelistet werden, gelten als nicht abgegeben. </p>
     </div>
-    <div sec:authorize="hasRole('SCHÜLER')" class="my-4" style="text-align: center">
-
-        <h1> Willkommen!</h1>
-        <h1>Sie sind als Schüler angemeldet.</h1>
-        <h2>Lösen Sie Augaben und sehen Sie sich ihre Benotung an</h2>
-        <p class="small">
-        </p>
-        <form class="float-right" method="post" sec:authorize="authenticated" th:action="@{/logout}">
-            <button class="btn btn-sm btn-link" type="submit">
-                <span th:text="${#httpServletRequest.remoteUser}" />
-                abmelden
-            </button>
-        </form>
-    </div>
-    <h3>vorhandene Aufgaben</h3>
-
-
+        <div sec:authorize="hasRole('SCHÜLER')" class="card-body">
+            <h5 class="card-title">Deine Aufgaben</h5>
+            <p class="card-text">Hier siehst du alle Aufgaben aus deinen Kursen. Du kannst die Aufgaben solange lösen und bearbeiten, bis dein Lehrer die Aufgabe schließt.</p>
+            <p class="card-text text-muted"> Solltest du beim Schließen noch keine Lösung haben, gilt sie als nicht abgegeben. </p>
+        </div>
+   </div>
+    <div style="width: 80%; margin-top: 100px;"></div>
     <div>
         <!--tabelle für die Anzeige der Aufgaben-->
-        <table sec:authorize="hasRole('LEHRER')" class="table">
+        <table sec:authorize="hasRole('LEHRER')" class="table table-striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <thead style="background-color: #032d57; color: white;">
             <tr>
-                <th>Id</th>
+
                 <th>Titel</th>
                 <th>Beschreibung</th>
                 <th>Fach</th>
                 <th>Status</th>
-
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
-
+            </thead>
             <tr th:each="task : ${teacherTasks}">
-                <td th:text="${task.id}"></td>
                 <td th:text="${task.title}"></td>
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.subject}"></td>
                 <td th:text="${task.status.name}"></td>
                 <td th:if="${not task.taskIsOnEdit}">
 
-                <td  sec:authorize="hasRole('LEHRER')"  th:if="${not task.taskIsOnEdit}">
+                <td th:if="${not task.taskIsOnEdit}">
                     <form style="float:left; margin-right:5px" th:action="${'/tasks/'  + task.id + '/deleteTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-danger">Löschen</button>
                     </form>
-
+                </td>
+                <td th:if="${not task.taskIsOnEdit}">
                     <form th:if="${task.status.name() == 'INITIAL'}" th:action="${'/tasks/' + task.id + '/editTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning">Bearbeiten</button>
                     </form>
@@ -70,15 +59,15 @@
                 <td th:if="${task.taskIsOnEdit}">
                     <form style="float:left; margin-right:5px" th:action="${'/tasks/' + task.id + '/saveNewTask'}" th:object="${taskForm}" method="post" class="form">
                         <input th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" th:field="*{title}"  type="text" placeholder="Titel" class="form-control mr-2">
-                        <input th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2">
+                        <label class="text-danger small" th:errors="*{title}" />
+                        <textarea th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2"></textarea>
+                         <label class="text-danger small" th:errors="*{description}" />
                         <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
                             <option th:each="subject : ${teacherSubjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
                         </select>
-
-                        <button type="submit" class="btn btn-primary">Speichern</button>
-                        <label class="text-danger small" th:errors="*{description}" />
-                        <label class="text-danger small" th:errors="*{title}" />
                         <label class="text-danger small" th:errors="*{subject}" />
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+
                     </form>
                     <form th:action="${'/tasks/' + task.id + '/abortEditTask'}" method="post" class="form">
                         <button type="submit" class="btn btn-warning"> Bearbeitung abbrechen</button>
@@ -104,29 +93,29 @@
             </tr>
         </table>
         <!--Ausgabe Aufgaben Schüler -Marc -->
-        <table sec:authorize="hasRole('SCHÜLER')" class="table">
+        <table sec:authorize="hasRole('SCHÜLER')" class="table table-striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <thead style="background-color: #032d57; color: white;">
             <tr>
-                <th>Id</th>
                 <th>Titel</th>
                 <th>Beschreibung</th>
                 <th>Fach</th>
                 <th>Status</th>
-
+                <th></th>
             </tr>
-
+            </thead>
             <tr th:each="task : ${studentTasks}" th:if="${task.status.name() != 'INITIAL'}">
-                <td th:text="${task.id}"></td>
                 <td th:text="${task.title}"></td>
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.subject}"></td>
                 <td th:text="${task.status.name}"></td>
                 <td th:if="${task.status.name() == 'VERÖFFENTLICHT'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Lösung abgeben/bearbeiten</a></td>
-                <td th:if="${task.status.name() == 'GESCHLOSSEN'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Bewertung/Antwort einsehen </a></td>
+                <td th:if="${task.status.name() == 'GESCHLOSSEN'}" sec:authorize="hasRole('SCHÜLER')" ><a th:href="${'/tasks/' + task.id}"> Bewertung einsehen </a></td>
 
             </tr>
+        </table>
     </div>
 
-
+    <div class="space"></div>
 </div>
 </body>
 </html>

@@ -1,0 +1,37 @@
+.card2 {
+    border: 1px solid black !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.info {
+    margin: auto;
+    width: 18rem;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+}
+.user {
+    margin:auto;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.custom {
+    background-color:#032d57 !important;
+    color: white !important;
+}
+
+.login {
+    width: 80%;
+    height: 550px;
+    margin-left: auto;
+    display: block;
+    margin-right: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card:hover {
+    box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2);
+}
+
+.space {
+   width: 80%;
+    margin-top: 50px;"
+}

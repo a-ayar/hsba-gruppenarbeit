@@ -37,6 +37,9 @@ public class TestDataCreator {
         User aylin = createUser ("Aylin Ayar", "Aylin", "password", User.STUDENT_ROLE);
         User leon = createUser("Leon Meier", "Leon", "password", User.STUDENT_ROLE);
         createUser ("Nils Voß", "Nils", "password", User.ADMIN_ROLE);
+        User peter = createUser("Peter Lustig", "Peter", "password", User.STUDENT_ROLE);
+        User anna = createUser ("Anna Müller", "Anna", "password", User.STUDENT_ROLE);
+
 
 
         // add some subjects
