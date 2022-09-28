@@ -1,10 +1,6 @@
 package de.hsba.bi.demo.user;
 
-import de.hsba.bi.demo.subject.Subject;
-import de.hsba.bi.demo.task.Task;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,25 +27,6 @@ public class UserService {
     public User save(User user) {return userRepository.save(user);
     }
 
-    //User in bearbeitungszustand setzen - Aylin
-    public void editUser(Long userId){
-        User user = getUser(userId);
-        user.setUserIsOnEdit(true);
-    }
-    //Due User Bearbeitugn abbrechen - Aylin
-    public void abortEditUser(Long userId){
-        User user = getUser(userId);
-        user.setUserIsOnEdit(false);
-    }
-    //Bearbeiteten User anlegen - Aylin
-    public void saveNewUser(Long userId, String newName, String newUsername, String newPassword, String newRole){
-        User user = getUser(userId);
-        user.setName(newName);
-        user.setUsername(newUsername);
-        user.setPassword(newPassword);
-        user.setRole(newRole);
-        user.setUserIsOnEdit(false);
-    }
     public User findCurrentUser() {return userRepository.findByUsername(User.getCurrentUsername());}
 
 }

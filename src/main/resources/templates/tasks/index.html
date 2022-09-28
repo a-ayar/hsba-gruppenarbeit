@@ -62,7 +62,8 @@
                         <label class="text-danger small" th:errors="*{title}" />
                         <textarea th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}" th:field="*{description}" type="text" placeholder="Beschreibung" class="form-control mr-2"></textarea>
                          <label class="text-danger small" th:errors="*{description}" />
-                        <select th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control mr-2">
+                        <select id="subject" th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}" th:field="*{subject}" class="form-control">
+                            <option value="">Fach auswählen</option>
                             <option th:each="subject : ${teacherSubjects}" th:text="${subject.id + '  ' + subject.name}" th:value="${subject.id}"></option>
                         </select>
                         <label class="text-danger small" th:errors="*{subject}" />

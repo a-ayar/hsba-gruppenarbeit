@@ -32,11 +32,6 @@ public class User implements Comparable<User> {
         return null;
     }
 
-    //Variabl für den Status der bearbeitung
-    @Getter
-    @Setter
-    private boolean UserIsOnEdit;
-
     @Getter
     @Id
     @GeneratedValue

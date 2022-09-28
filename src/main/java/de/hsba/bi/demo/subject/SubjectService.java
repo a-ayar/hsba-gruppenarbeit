@@ -54,21 +54,6 @@ public class SubjectService {
     //Die Fächer eines Schülers - Marc
     public List<Subject> getSubjectByStuId(Long id) {return subjectRepository.findSubjectByStudentId(id);}
 
-
-    public void editSubject(Long subjectId){
-        Subject subject = getSubject(subjectId);
-        subject.setSubjectIsOnEdit(true);
-    }
-    public void abortEditSubject(Long subjectId){
-        Subject subject = getSubject(subjectId);
-        subject.setSubjectIsOnEdit(false);
-    }
-    public void saveNewSubject(Long subjectId, String newName, User newTeacher) {
-        Subject subject = getSubject(subjectId);
-        subject.setName(newName);
-        subject.setTeacher(newTeacher);
-        subject.setSubjectIsOnEdit(false);
-    }
     // zum löschen einer Aufgabe
     public void deleteSubject(Long subjectId){
         subjectRepository.deleteById(subjectId);

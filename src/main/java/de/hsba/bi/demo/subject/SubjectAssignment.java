@@ -1,6 +1,5 @@
 package de.hsba.bi.demo.subject;
 
-import de.hsba.bi.demo.subject.Subject;
 import de.hsba.bi.demo.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @AllArgsConstructor
@@ -29,9 +28,4 @@ public class SubjectAssignment {
     @Setter
     @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Subject subjects;
-
-public SubjectAssignment(User student, Subject subject){
-    this.student = student;
-    this.subjects = subject;
-}
 }

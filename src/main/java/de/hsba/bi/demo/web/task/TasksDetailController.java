@@ -73,6 +73,14 @@ public class TasksDetailController {
         return subjectService.getSubjectByStuId(userAdapter.getId());
     }
 
+    @ModelAttribute("teacherSubjects")
+    public List<Subject> getTeacherSubjects() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserAdapter userAdapter = userAdapterService.loadUserByUsername(auth.getName());
+
+        return subjectService.getSubjectById(userAdapter.getId());
+    }
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("taskForm", new TaskForm());//sichergestellt das html view immer ein Formular hat - Aylin

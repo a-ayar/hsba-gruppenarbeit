@@ -16,10 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Subject implements Comparable<Subject> {
 
-    @Getter
-    @Setter
-    private boolean SubjectIsOnEdit;
-
     @Id
     @GeneratedValue
     @Getter

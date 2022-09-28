@@ -52,21 +52,4 @@ public class CreateSubjectController {
         return "redirect:/subjects";
     }
 
-
-    @PostMapping(path = "/{id}/editSubject")
-    public String editSubject(@PathVariable("id") Long subjectId) {
-        subjectService.editSubject(subjectId);
-        return "redirect:/subjects";
-    }
-    @PostMapping(path = "/{id}/abortEditSubject")
-    public String abortEditSubject(@PathVariable("id") Long subjectId) {
-        subjectService.abortEditSubject(subjectId);
-        return "redirect:/subjects";
-    }
-
-    @PostMapping(path = "/{id}/saveNewSubject")
-    public String saveNewSubject(@PathVariable("id") Long subjectId, @RequestParam(name = "newName")String newName,  @RequestParam(name = "newTeacher") User newTeacher) {
-        subjectService.saveNewSubject(subjectId, newName, newTeacher);
-        return "redirect:/subjects";
-    }
 }

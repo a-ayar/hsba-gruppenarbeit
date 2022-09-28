@@ -50,7 +50,7 @@ public class CreateTaskController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("tasks", taskService.getAll()); // Vielleicht überflüssig
+        model.addAttribute("tasks", taskService.getAll());
         model.addAttribute("taskForm", new TaskForm());
         return "tasks/createTask";
     }
