@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public class TestDataCreator {
 
-    //private final TaskRepository taskRepository;
+
     private final UserService userService;
     private final TaskService taskService;
     private final SubjectService subjectService;
@@ -27,7 +27,6 @@ public class TestDataCreator {
     @EventListener(ApplicationStartedEvent.class)
     public void init() {
         if (!userService.findAll().isEmpty()) {
-            // prevent initialization if DB is not empty
             return;
         }
 
@@ -42,14 +41,14 @@ public class TestDataCreator {
 
 
 
-        // add some subjects
+        // subjects
         Subject subject = subjectService.createSubject("Deutsch", marc, List.of(aylin, leon));
         Subject subject2 = subjectService.createSubject("Mathe", marc, List.of(aylin, leon));
         subjectService.save(subject);
         subjectService.save(subject2);
 
 
-        // add example Task for testing
+        //Tasks
         Task initialtask = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, Status.VERÖFFENTLICHT);
         Task task = taskService.createTask("Gleichung lösen", "Löse die Gleichung 34 + x = 67", subject, Status.VERÖFFENTLICHT);
         taskService.addTaskEntry(task, new TaskEntry("Die Antwort ist 33", aylin));

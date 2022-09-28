@@ -1,15 +1,13 @@
 package de.hsba.bi.demo.subject;
 
-import de.hsba.bi.demo.task.Task;
-import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
+
 import java.util.List;
-import java.util.Set;
+
 
 
 @Service
@@ -21,7 +19,7 @@ public class SubjectService {
     private final SubjectAssignmentRepository subjectAssignmentRepository;
 
 
-    // Fach erstellen
+    // Fach erstellen - Aylin
     public Subject createSubject(String name, User teacher, List<User> students) {
         Subject subject = new Subject(name, teacher);
         for (User student : students) {
@@ -29,16 +27,16 @@ public class SubjectService {
             subjectAssignment.setSubjects(subject);
             subjectAssignment.setStudent(student);
             subjectAssignmentRepository.save(subjectAssignment);
-            subject.addToAssignments(subjectAssignment); //ergänzung
+            subject.addToAssignments(subjectAssignment);
         }
         return subjectRepository.save(subject);
     }
-    //Aufgabe speicher --> für testdata - Aylin
+    //Fach speichern - Aylin
     public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
 
-    //Aufgabe aufrufen - Aylin
+    //Fach aufrufen - Aylin
     public Subject getSubject(Long id) {
         return subjectRepository.findById(id).orElse(null);
     }
@@ -54,11 +52,12 @@ public class SubjectService {
     //Die Fächer eines Schülers - Marc
     public List<Subject> getSubjectByStuId(Long id) {return subjectRepository.findSubjectByStudentId(id);}
 
-    // zum löschen einer Aufgabe
+    // zum löschen eines Faches - Aylin
     public void deleteSubject(Long subjectId){
         subjectRepository.deleteById(subjectId);
     }
 
+    // Abfrage aller Fächer - Aylin
     public List<Subject> findAll() {return subjectRepository.findAll();
     }
 

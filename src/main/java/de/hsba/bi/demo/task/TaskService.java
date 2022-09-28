@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.transaction.Transactional;
 
-@Service // da von dieser Klasse ein Objekt erstellt werden soll - Aylin
+@Service
 @Transactional
 @RequiredArgsConstructor
 
@@ -116,12 +116,6 @@ public class TaskService {
     //Bearbeitung der Antwort abbrechen - Aylin
     public void abortEditAnswer(Long id, Long entryId){
         TaskEntry taskEntry = getTaskEntry(id, entryId);
-        taskEntry.setAnswerIsOnEdit(false);
-    }
-    // Bearbeitete Anwort speichern - Aylin
-    public void saveNewAnswer(Long id, Long entryId, String newAnswer){
-        TaskEntry taskEntry = getTaskEntry(id, entryId);
-        taskEntry.setSolution(newAnswer);
         taskEntry.setAnswerIsOnEdit(false);
     }
 

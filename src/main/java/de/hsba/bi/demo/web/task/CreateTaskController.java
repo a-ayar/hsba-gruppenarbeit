@@ -38,7 +38,7 @@ public class CreateTaskController {
     }
 
 
-
+//ModelAttribute Fächer nach Lehrer - Marc
     @ModelAttribute("teacherSubjects")
     public List<Subject> getTeacherSubjects() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -55,6 +55,7 @@ public class CreateTaskController {
         return "tasks/createTask";
     }
 
+    //erstellen einer Aufgabe - Aylin
     @PostMapping
     public String createTask(@ModelAttribute("taskForm") @Valid TaskForm taskForm, BindingResult taskBinding, Model model) {
         if (taskBinding.hasErrors()){

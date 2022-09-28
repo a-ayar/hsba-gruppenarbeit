@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class DefaultController {
+    //Rollenunterscheidung nach Login - Nils
     @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ADMIN")) {

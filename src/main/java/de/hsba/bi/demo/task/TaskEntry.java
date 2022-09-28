@@ -15,7 +15,7 @@ public class TaskEntry {
     @Setter
     private boolean answerIsOnEdit;
 
-    //Variable für die bewertung - Aylin
+    //Variable für die Bewertung - Aylin
     @Getter
     @Setter
     private boolean evaluationIsOnEdit;

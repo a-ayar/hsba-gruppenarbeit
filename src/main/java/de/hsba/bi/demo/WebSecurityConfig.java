@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //Rahmenbedingungen Login und Absicherung - Marc und Nils
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

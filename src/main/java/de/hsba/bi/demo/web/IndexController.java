@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 
 public class IndexController {
-
+// Start der Anwendung mit Login - Nils
     @GetMapping
     public String index() {
         return "redirect:/login";

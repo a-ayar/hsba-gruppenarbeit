@@ -30,7 +30,7 @@ public class CreateSubjectController {
         return "admin/createSubject";
     }
 
-
+// erstellen eines Faches - Aylin
     @PostMapping
     public String createSubject(@RequestParam(name = "name") String name, @RequestParam(name = "teacher") Long teacherid , @RequestParam(name = "students") List<Long> studentsid) {
 
@@ -45,7 +45,7 @@ public class CreateSubjectController {
         Subject subject = subjectService.createSubject(name, teacher, students);
         return "redirect:/subjects/";
     }
-
+// löschen eines Faches - Aylin
     @PostMapping(path = "/{id}/deleteSubject")
     public String deleteSubject(@PathVariable("id") Long subjectId) {
         subjectService.deleteSubject(subjectId);

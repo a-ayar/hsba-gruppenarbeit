@@ -18,6 +18,7 @@ public class UserAdapter implements UserDetails {
         return Set.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
+    //relevant für Login (Userdaten) - Marc
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -30,6 +31,7 @@ public class UserAdapter implements UserDetails {
 
     public Long getId() {return user.getId();}
 
+    //Gültigkeit des Accounts - Marc
     @Override
     public boolean isAccountNonExpired() {
         return true;

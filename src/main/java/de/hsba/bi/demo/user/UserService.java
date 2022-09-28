@@ -14,7 +14,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    //Methoden für verschiedene Funktionen -Aylin
     //löschen - Aylin
     public void delete(Long id) { userRepository.deleteById(id);};
     //Datenbankabfragen - Aylin

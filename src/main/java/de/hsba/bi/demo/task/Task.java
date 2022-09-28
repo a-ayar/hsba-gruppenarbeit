@@ -43,7 +43,6 @@ public class Task {
     @Getter
     private Status status;
 
-//Wenn eine Aufgabe gelöscht wird, soll auch die abgegebenen Lösungen gelöscht werden -Aylin
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     private List<TaskEntry> entries;
 
@@ -61,8 +60,6 @@ public class Task {
                 return entry;
             }
         }
-        //Hier sollte er nicht hinkommen,
-        // wenn doch, ist kein Entry mit der ID vorhanden udn hier sollte stattdessen eine Fehlerbehandlung stattfinden - Aylin
         return new TaskEntry();
     }
 

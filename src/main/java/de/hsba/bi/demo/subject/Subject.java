@@ -1,8 +1,7 @@
 package de.hsba.bi.demo.subject;
 
-//import de.hsba.bi.demo.user.User;
+
 import de.hsba.bi.demo.task.Task;
-import de.hsba.bi.demo.task.TaskEntry;
 import de.hsba.bi.demo.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -67,8 +66,9 @@ public class Subject implements Comparable<Subject> {
         return name;
     }
 
+    //Methode um die assignments zu übergeben - Aylin
     public void addToAssignments(SubjectAssignment newAssignment){
-        assignments.add(newAssignment); //neue Methode um die Assignment zu übergeben
+        assignments.add(newAssignment);
     }
 
 

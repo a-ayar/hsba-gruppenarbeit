@@ -8,6 +8,7 @@ import java.util.List;
 interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 
+    //Datenbankabfrage User nach Rolle
     @Query("select s from User s where s.role = :role ")
     List<User> findByRole (String role);
 

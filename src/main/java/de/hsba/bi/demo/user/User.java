@@ -24,6 +24,7 @@ public class User implements Comparable<User> {
     public static String TEACHER_ROLE = "LEHRER";
     public static String ADMIN_ROLE = "ADMIN";
 
+    //Methode um den aktuellen User zu bekommen - Aylin
     public static String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
@@ -59,19 +60,19 @@ public class User implements Comparable<User> {
     @Basic(optional = false)
     private String role;
 
-    //Wenn ein Schüler gelöscht werden soll dann sollen die Zuweisung der Schüler auch gelöscht werden - Aylin
+
     @Getter
     @Setter
     @OneToMany (mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<SubjectAssignment> subjects=new ArrayList<>();
 
-    //Wenn ein Schüler gelöscht werden soll dann sollen die Antworten der Schüler auch gelöscht werden - Aylin
+
     @Getter
     @Setter
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskEntry> taskEntries=new ArrayList<>();
 
-    //Wenn ein Lehrer gelöscht werden soll dann sollen die Fächer eines Lehrers auch gelöscht werden - Aylin
+
     @Getter
     @Setter
     @OneToMany (mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
